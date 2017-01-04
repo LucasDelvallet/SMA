@@ -7,101 +7,111 @@ public class Agent {
 
 	private Random rand;
 	private Color color;
-	private Position currentPosition, nextPosition, nextDeterminedMove;
+	private Position currentPosition, nextMove, nextDeterminedMove;
 	private boolean mustApplyDeterminedMove;
 	protected Environment environment;
-	
-	
-	public Agent(Environment environment, int x, int y){
+
+	public Agent(Environment environment, int x, int y) {
 		this.environment = environment;
 		rand = new Random();
 		currentPosition = new Position(x, y);
-		nextPosition = new Position();
+		nextMove = new Position();
 		nextDeterminedMove = new Position();
 		mustApplyDeterminedMove = false;
 	}
-	
-	public void update(){
-		currentPosition = nextPosition;
-		nextPosition = null;
-	}
-	
-	public void decide(){
-		if(mustApplyDeterminedMove) {
+
+	public void update() {
+		currentPosition.setX(currentPosition.getX() + nextMove.getX());
+		currentPosition.setY(currentPosition.getY() + nextMove.getY());
+
+		if (mustApplyDeterminedMove) {
 			mustApplyDeterminedMove = false;
-			nextPosition.setX(currentPosition.getX() + nextDeterminedMove.getX());
-			nextPosition.setY(currentPosition.getY() + nextDeterminedMove.getY());
+			nextMove = nextDeterminedMove;
 		} else {
-			setNextPosition();
-		}
-		
-		// CheckNextPosition ici ??
-		checkNextPosition();
-	}
-	
-	private void setNextPosition() {
-		switch(rand.nextInt(7)) {
-		case 0:
-			nextPosition.setX(nextPosition.getX() - 1);
-			break;
-		case 1:
-			nextPosition.setX(nextPosition.getX() - 1);
-			nextPosition.setY(nextPosition.getY() + 1);
-			break;
-		case 2:
-			nextPosition.setY(nextPosition.getY() + 1);
-			break;
-		case 3:
-			nextPosition.setX(nextPosition.getX() + 1);
-			nextPosition.setY(nextPosition.getY() + 1);
-			break;
-		case 4:
-			nextPosition.setY(nextPosition.getY() + 1);
-			break;
-		case 5:
-			nextPosition.setX(nextPosition.getX() - 1);
-			nextPosition.setY(nextPosition.getY() + 1);
-			break;
-		case 6:
-			nextPosition.setX(currentPosition.getX() - 1);
-			break;
-		case 7:
-			nextPosition.setX(currentPosition.getX() - 1);
-			nextPosition.setY(currentPosition.getY() - 1);
-			break;
+			setNextMove();
 		}
 	}
 	
-	private void checkNextPosition() {
+	public Position getNextMove() {
+		return nextMove;
+	}
+	
+	public void setNextMove(Position nextMove) {
+		this.nextMove = nextMove;
+	}
+	
+	public Position getNextPosition() {
+		return new Position(currentPosition.getX() + nextMove.getX(), currentPosition.getY() + nextMove.getY());
+	}
+
+	public void decide() {
 		int x = 0, y = 0;
-		
+
 		// Check wall colision
-		if(nextPosition.getX() < 0) {
+		if (nextMove.getX() < 0) {
 			mustApplyDeterminedMove = true;
-			nextPosition = currentPosition;
+			nextMove = currentPosition;
 			x = 1;
-		}
-		
-		if(nextPosition.getX() > environment.getWidth() - 1) {
+		} else if (nextMove.getX() > environment.getWidth() - 1) {
 			mustApplyDeterminedMove = true;
-			nextPosition = currentPosition;
+			nextMove = currentPosition;
 			x = -1;
 		}
-		
-		if(nextPosition.getY() < 0) {
+
+		if (nextMove.getY() < 0) {
 			mustApplyDeterminedMove = true;
-			nextPosition = currentPosition;
+			nextMove = currentPosition;
 			y = 1;
-		}
-		
-		if(nextPosition.getY() > environment.getHeight() - 1) {
+		} else if (nextMove.getY() > environment.getHeight() - 1) {
 			mustApplyDeterminedMove = true;
-			nextPosition = currentPosition;
+			nextMove = currentPosition;
 			y = -1;
 		}
-		
+
 		// Check agent collisions
-		
+		for(Agent agent : environment.getAgents()) {
+			if(!agent.equals(this)) {
+				if(getNextPosition().equals(agent.getNextPosition())) {
+					Position agenNextMove = agent.getNextMove();
+					agent.setNextMove(getNextMove());
+					setNextMove(agenNextMove);
+				}
+			}
+		}
+
 		nextDeterminedMove = new Position(x, y);
+	}
+
+	private void setNextMove() {
+		switch (rand.nextInt(7)) {
+		case 0:
+			nextMove.setX(-1);
+			break;
+		case 1:
+			nextMove.setX(-1);
+			nextMove.setY(1);
+			break;
+		case 2:
+			nextMove.setY(1);
+			break;
+		case 3:
+			nextMove.setX(1);
+			nextMove.setY(1);
+			break;
+		case 4:
+			nextMove.setY(1);
+			break;
+		case 5:
+			nextMove.setX(-1);
+			nextMove.setY(1);
+			break;
+		case 6:
+			nextMove.setX(-1);
+			break;
+		case 7:
+			nextMove.setX(-1);
+			nextMove.setY(-1);
+			break;
+		}
 	}
 }

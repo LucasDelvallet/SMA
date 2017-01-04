@@ -28,4 +28,10 @@ public class Position {
 	public void setY(int y) {
 		this.y = y;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		Position other = (Position) obj;
+		return (other.x == x) && (other.y == y); 
+	}
 }
