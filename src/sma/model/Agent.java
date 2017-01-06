@@ -92,7 +92,7 @@ public class Agent {
 	}
 
 	private void setNextMove() {
-		switch (rand.nextInt(7)) {
+		switch (rand.nextInt(8)) {
 		case 0:
 			nextMove.setX(1);
 			nextMove.setY(0);

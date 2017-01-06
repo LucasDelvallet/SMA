@@ -1,9 +1,12 @@
 package sma;
 
-import java.awt.*;
-import sma.model.*;
-import view.*;
-import com.sun.media.sound.ModelAbstractChannelMixer;
+import java.awt.Color;
+import java.awt.Dimension;
+
+import sma.model.Parameters;
+import sma.model.SMA;
+import view.GUIHelper;
+import view.View;
 
 public class Main {
 	
