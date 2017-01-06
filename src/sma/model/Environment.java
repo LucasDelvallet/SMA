@@ -7,16 +7,13 @@ public class Environment {
 	private int width;
 	private int height;
 	private SMA sma;
-	public List<Agent> agentlist;
+	private List<Agent> agentlist;
 	
 	
-	public Environment(int width, int height){
-		this.width = width;
-		this.height = height;
-		
-		//Creer les agents.
-		
-		//this.sma = new SMA(this, agentlist);
+	public Environment(SMA sma){
+		this.width = Parameters.gridSizeX;
+		this.height = Parameters.gridSizeY;
+		this.sma = sma;
 	}
 	
 	public int getWidth(){
@@ -31,4 +28,7 @@ public class Environment {
 		return agentlist;
 	}
 	
+	public void setAgentlist(List<Agent> agentlist){
+		this.agentlist = agentlist;
+	}
 }
