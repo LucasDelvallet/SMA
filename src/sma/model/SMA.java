@@ -47,18 +47,24 @@ public class SMA extends Observable {
 	public void run(){
 		int tick = 0;
 		while(tick < Parameters.nbTicks){
+			long startTime = System.currentTimeMillis();
 			Collections.shuffle(agentlist); //Voir si on laisse on pas, vu que c'est pas affecté par le seed
 
 			for(int i = 0; i < agentlist.size(); i++){
 				agentlist.get(i).decide();
 				agentlist.get(i).update();
-				System.out.println("Agent " + i + "  position x=" + agentlist.get(i).getCurrentPosition().getX() + "  y=" + agentlist.get(i).getCurrentPosition().getY());
+				//System.out.println("Agent " + i + "  position x=" + agentlist.get(i).getCurrentPosition().getX() + "  y=" + agentlist.get(i).getCurrentPosition().getY());
 			}
 			
 			tick++;
 			
 			setChanged();
             notifyObservers();
+            
+
+			long endTime = System.currentTimeMillis();
+			long duration = (endTime - startTime);
+			System.out.println("Tick time : " + duration);
             
             try {
 				Thread.sleep(Parameters.delay);

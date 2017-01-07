@@ -43,9 +43,7 @@ public class View extends JPanel implements Observer{
         }
 		
 		List<Agent> agentlist = sma.getAgentlist();
-		for(int i = 0; i < agentlist.size(); i++){
-			Agent agent = agentlist.get(i);
-			
+		for(Agent agent : agentlist){
 			Color c = g2.getColor();
 			g2.setColor(agent.getColor());	
 			g2.fillOval(agent.getCurrentPosition().getX(), agent.getCurrentPosition().getY(), Parameters.boxSize, Parameters.boxSize);

@@ -26,15 +26,14 @@ public class Agent {
 	}
 
 	public void update() {
+		environment.agentsPosition[currentPosition.getX()/Parameters.boxSize][currentPosition.getY()/Parameters.boxSize] = null;
+				
 		currentPosition.setX(currentPosition.getX() + nextMove.getX());
 		currentPosition.setY(currentPosition.getY() + nextMove.getY());
-
-		if (mustApplyDeterminedMove) {
-			mustApplyDeterminedMove = false;
-			nextMove = nextDeterminedMove;
-		} else {
-			setNextMove();
-		}
+		
+		environment.agentsPosition[currentPosition.getX()/Parameters.boxSize][currentPosition.getY()/Parameters.boxSize] = this;
+		
+		setNextMove();
 	}
 	
 	public Position getNextMove() {
@@ -57,39 +56,53 @@ public class Agent {
 		return color;
 	}
 
-	public void decide() {
-		int x = 0, y = 0;
-
+	private void checkWallCollision(){
 		// Check wall colision
-		if (nextMove.getX() + currentPosition.getX()  <= 0) {
-			mustApplyDeterminedMove = true;
-			x = Parameters.boxSize;
-		} else if (nextMove.getX() + currentPosition.getX()  >= environment.getWidth() - Parameters.boxSize) {
-			mustApplyDeterminedMove = true;
-			x = -Parameters.boxSize;
-		}
-
-		if (nextMove.getY() + currentPosition.getY()  <= 0) {
-			mustApplyDeterminedMove = true;
-			y = Parameters.boxSize;
-		} else if (nextMove.getY() + currentPosition.getY()  >= environment.getHeight() - Parameters.boxSize) {
-			mustApplyDeterminedMove = true;
-			y = -Parameters.boxSize;
-		}
-
-		// Check agent collisions
-		for(Agent agent : environment.getAgents()) {
-			if(!agent.equals(this)) {
-				if(getNextPosition().equals(agent.getNextPosition())) {
-					Position agenNextMove = agent.getNextMove();
-					agent.setNextMove(getNextMove());
-					setNextMove(agenNextMove);
-				}
+		
+		int border_x = environment.getWidth() - Parameters.boxSize;
+		int border_y = environment.getHeight() - Parameters.boxSize;
+		Position nextPosition = getNextPosition();
+		while(nextPosition.getX() < 0 
+				|| nextPosition.getX() > border_x
+				|| nextPosition.getY() < 0 
+				|| nextPosition.getY() > border_y){
+			
+			if (nextPosition.getX() < 0) {
+				nextMove.setX(0);
+				nextMove.setY(-nextMove.getY());
+			} else if (nextPosition.getX()  >= border_x) {
+				nextMove.setX(0);
+				nextMove.setY(-nextMove.getY());
 			}
-		}
 
-		nextDeterminedMove = new Position(x, y);
+			if (nextPosition.getY()  < 0) {
+				nextMove.setX(-nextMove.getX());
+				nextMove.setY(0);
+			} else if (nextPosition.getY()  >= border_y) {
+				nextMove.setX(-nextMove.getX());
+				nextMove.setY(0);
+			}	
+			nextPosition = getNextPosition();
+		}
+		
+		
 	}
+	
+	public void decide() {
+		checkWallCollision();
+		
+		// Check agent collisions
+		Position nextPos = getNextPosition();
+		if(environment.agentsPosition[nextPos.getX()/Parameters.boxSize][nextPos.getY()/Parameters.boxSize] != null){
+			Agent agentCollision = environment.agentsPosition[nextPos.getX()/Parameters.boxSize][nextPos.getY()/Parameters.boxSize];
+			Position agenNextMove = agentCollision.getNextMove();
+			agentCollision.setNextMove(getNextMove());
+			setNextMove(agenNextMove);
+		}
+		
+		checkWallCollision();
+	}
+	
 
 	private void setNextMove() {
 		switch (rand.nextInt(8)) {
