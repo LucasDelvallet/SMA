@@ -22,12 +22,16 @@ public class SMA extends Observable {
 		return agentlist;
 	}
 	
+	public Environment getEnvironment(){
+		return environment;
+	}
+	
 	private void initAgent(){
 		agentlist = new ArrayList<Agent>();
 		
 		List<Position> possiblePositions = new ArrayList<Position>();
-		for(int i = 0; i < Parameters.gridSizeX; i++){
-			for(int j = 0; j < Parameters.gridSizeY; j++){
+		for(int i = 0; i < environment.getWidth(); i+=Parameters.boxSize){
+			for(int j = 0; j < environment.getHeight(); j+=Parameters.boxSize){
 				possiblePositions.add(new Position(i,j));
 			}
 		}
@@ -42,8 +46,7 @@ public class SMA extends Observable {
 	
 	public void run(){
 		int tick = 0;
-		//while(tick < Parameters.nbTicks){
-		while(true){
+		while(tick < Parameters.nbTicks){
 			Collections.shuffle(agentlist); //Voir si on laisse on pas, vu que c'est pas affecté par le seed
 
 			for(int i = 0; i < agentlist.size(); i++){
@@ -60,7 +63,6 @@ public class SMA extends Observable {
             try {
 				Thread.sleep(Parameters.delay);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

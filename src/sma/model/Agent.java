@@ -61,20 +61,20 @@ public class Agent {
 		int x = 0, y = 0;
 
 		// Check wall colision
-		if (nextMove.getX() + currentPosition.getX()  < 0) {
+		if (nextMove.getX() + currentPosition.getX()  <= 0) {
 			mustApplyDeterminedMove = true;
-			x = 1;
-		} else if (nextMove.getX() + currentPosition.getX()  > environment.getWidth() - 1) {
+			x = Parameters.boxSize;
+		} else if (nextMove.getX() + currentPosition.getX()  >= environment.getWidth() - Parameters.boxSize) {
 			mustApplyDeterminedMove = true;
-			x = -1;
+			x = -Parameters.boxSize;
 		}
 
-		if (nextMove.getY() + currentPosition.getY()  < 0) {
+		if (nextMove.getY() + currentPosition.getY()  <= 0) {
 			mustApplyDeterminedMove = true;
-			y = 1;
-		} else if (nextMove.getY() + currentPosition.getY()  > environment.getHeight() - 1) {
+			y = Parameters.boxSize;
+		} else if (nextMove.getY() + currentPosition.getY()  >= environment.getHeight() - Parameters.boxSize) {
 			mustApplyDeterminedMove = true;
-			y = -1;
+			y = -Parameters.boxSize;
 		}
 
 		// Check agent collisions
@@ -94,36 +94,36 @@ public class Agent {
 	private void setNextMove() {
 		switch (rand.nextInt(8)) {
 		case 0:
-			nextMove.setX(1);
+			nextMove.setX(Parameters.boxSize);
 			nextMove.setY(0);
 			break;
 		case 1:
-			nextMove.setX(1);
-			nextMove.setY(1);
+			nextMove.setX(Parameters.boxSize);
+			nextMove.setY(Parameters.boxSize);
 			break;
 		case 2:
 			nextMove.setX(0);
-			nextMove.setY(1);
+			nextMove.setY(Parameters.boxSize);
 			break;
 		case 3:
-			nextMove.setX(-1);
-			nextMove.setY(1);
+			nextMove.setX(-Parameters.boxSize);
+			nextMove.setY(Parameters.boxSize);
 			break;
 		case 4:
-			nextMove.setX(-1);
+			nextMove.setX(-Parameters.boxSize);
 			nextMove.setY(0);
 			break;
 		case 5:
-			nextMove.setX(-1);
-			nextMove.setY(-1);
+			nextMove.setX(-Parameters.boxSize);
+			nextMove.setY(-Parameters.boxSize);
 			break;
 		case 6:
 			nextMove.setX(0);
-			nextMove.setY(-1);
+			nextMove.setY(-Parameters.boxSize);
 			break;
 		case 7:
-			nextMove.setX(1);
-			nextMove.setY(-1);
+			nextMove.setX(Parameters.boxSize);
+			nextMove.setY(-Parameters.boxSize);
 			break;
 		}
 	}

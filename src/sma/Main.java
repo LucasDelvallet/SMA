@@ -3,6 +3,8 @@ package sma;
 import java.awt.Color;
 import java.awt.Dimension;
 
+import javax.swing.JScrollPane;
+
 import sma.model.Parameters;
 import sma.model.SMA;
 import view.GUIHelper;
@@ -13,11 +15,14 @@ public class Main {
 	public static void main(String[] args) {
 		SMA sma = new SMA();
 
-		View jc = new View();
-		jc.setBackground(Color.WHITE);
-		jc.setPreferredSize(new Dimension(Parameters.gridSizeX,Parameters.gridSizeY));
-		sma.addObserver(jc);
-		GUIHelper.showOnFrame(jc,"S.M.A");
+		
+		
+		View view = new View();
+		sma.addObserver(view);
+		
+		
+		JScrollPane scrollPane = new JScrollPane(view);
+		GUIHelper.showOnFrame(scrollPane,"S.M.A");
 		
 		sma.run();
 	}

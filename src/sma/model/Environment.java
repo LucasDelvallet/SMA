@@ -11,8 +11,8 @@ public class Environment {
 	
 	
 	public Environment(SMA sma){
-		this.width = Parameters.gridSizeX;
-		this.height = Parameters.gridSizeY;
+		this.width = Parameters.gridSizeX*Parameters.boxSize;
+		this.height = Parameters.gridSizeY*Parameters.boxSize;
 		this.sma = sma;
 	}
 	
