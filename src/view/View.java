@@ -30,17 +30,18 @@ public class View extends JPanel implements Observer{
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setPaint(Color.GRAY);
 		
-		int grid_division_x = Parameters.gridSizeX;
-		int grid_division_y = Parameters.gridSizeY;
-		
-        for (int i = 1; i < grid_division_x; i++) {
-           int x = i * (sma.getEnvironment().getWidth() / grid_division_x);
-           g2.drawLine(x, 0, x, sma.getEnvironment().getHeight());
-        }
-        for (int i = 1; i < grid_division_y; i++) {
-           int y = i * (sma.getEnvironment().getHeight() / grid_division_y);
-           g2.drawLine(0, y, sma.getEnvironment().getWidth(), y);
-        }
+		if(Parameters.grid){
+			int grid_division_x = Parameters.gridSizeX;
+			int grid_division_y = Parameters.gridSizeY;
+	        for (int i = 1; i < grid_division_x; i++) {
+	           int x = i * (sma.getEnvironment().getWidth() / grid_division_x);
+	           g2.drawLine(x, 0, x, sma.getEnvironment().getHeight());
+	        }
+	        for (int i = 1; i < grid_division_y; i++) {
+	           int y = i * (sma.getEnvironment().getHeight() / grid_division_y);
+	           g2.drawLine(0, y, sma.getEnvironment().getWidth(), y);
+	        }
+		}
 		
 		List<Agent> agentlist = sma.getAgentlist();
 		for(Agent agent : agentlist){

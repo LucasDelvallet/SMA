@@ -23,6 +23,8 @@ public class Agent {
 		nextMove = new Position();
 		nextDeterminedMove = new Position();
 		mustApplyDeterminedMove = false;
+		
+		setDirection();
 	}
 
 	public void update() {
@@ -33,7 +35,7 @@ public class Agent {
 		
 		environment.agentsPosition[currentPosition.getX()/Parameters.boxSize][currentPosition.getY()/Parameters.boxSize] = this;
 		
-		setNextMove();
+
 	}
 	
 	public Position getNextMove() {
@@ -62,36 +64,23 @@ public class Agent {
 		int border_x = environment.getWidth() - Parameters.boxSize;
 		int border_y = environment.getHeight() - Parameters.boxSize;
 		Position nextPosition = getNextPosition();
-		while(nextPosition.getX() < 0 
-				|| nextPosition.getX() > border_x
-				|| nextPosition.getY() < 0 
-				|| nextPosition.getY() > border_y){
-			
-			if (nextPosition.getX() < 0) {
-				nextMove.setX(0);
-				nextMove.setY(-nextMove.getY());
-			} else if (nextPosition.getX()  >= border_x) {
-				nextMove.setX(0);
-				nextMove.setY(-nextMove.getY());
-			}
 
-			if (nextPosition.getY()  < 0) {
-				nextMove.setX(-nextMove.getX());
-				nextMove.setY(0);
-			} else if (nextPosition.getY()  >= border_y) {
-				nextMove.setX(-nextMove.getX());
-				nextMove.setY(0);
-			}	
-			nextPosition = getNextPosition();
+		if (nextPosition.getX() < 0) {
+			nextMove.setX(-nextMove.getX());
+		} else if (nextPosition.getX() > border_x) {
+			nextMove.setX(-nextMove.getX());
 		}
-		
+
+		if (nextPosition.getY() < 0) {
+			nextMove.setY(-nextMove.getY());
+		} else if (nextPosition.getY() > border_y) {
+			nextMove.setY(-nextMove.getY());
+		}
+		nextPosition = getNextPosition();
 		
 	}
 	
-	public void decide() {
-		checkWallCollision();
-		
-		// Check agent collisions
+	private void checkAgentCollision(){
 		Position nextPos = getNextPosition();
 		if(environment.agentsPosition[nextPos.getX()/Parameters.boxSize][nextPos.getY()/Parameters.boxSize] != null){
 			Agent agentCollision = environment.agentsPosition[nextPos.getX()/Parameters.boxSize][nextPos.getY()/Parameters.boxSize];
@@ -100,11 +89,16 @@ public class Agent {
 			setNextMove(agenNextMove);
 		}
 		
+	}
+	
+	public void decide() {
+		checkWallCollision();
+		checkAgentCollision();
 		checkWallCollision();
 	}
 	
 
-	private void setNextMove() {
+	private void setDirection() {
 		switch (rand.nextInt(8)) {
 		case 0:
 			nextMove.setX(Parameters.boxSize);
