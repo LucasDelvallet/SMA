@@ -34,4 +34,8 @@ public class Position {
 		Position other = (Position) obj;
 		return (other.x == x) && (other.y == y); 
 	}
+	
+	public boolean isOpposite(Position p) {
+		return (-p.getX() == x) && (-p.getY() == y);
+	}
 }

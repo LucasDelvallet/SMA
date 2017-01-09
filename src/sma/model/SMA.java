@@ -52,6 +52,12 @@ public class SMA extends Observable {
 
 			for(int i = 0; i < agentlist.size(); i++){
 				agentlist.get(i).decide();
+				//agentlist.get(i).update();
+				//System.out.println("Agent " + i + "  position x=" + agentlist.get(i).getCurrentPosition().getX() + "  y=" + agentlist.get(i).getCurrentPosition().getY());
+			}
+			
+			for(int i = 0; i < agentlist.size(); i++){
+				//agentlist.get(i).decide();
 				agentlist.get(i).update();
 				//System.out.println("Agent " + i + "  position x=" + agentlist.get(i).getCurrentPosition().getX() + "  y=" + agentlist.get(i).getCurrentPosition().getY());
 			}
