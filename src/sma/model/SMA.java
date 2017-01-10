@@ -30,15 +30,18 @@ public class SMA extends Observable {
 		agentlist = new ArrayList<Agent>();
 		
 		List<Position> possiblePositions = new ArrayList<Position>();
-		for(int i = 0; i < environment.getWidth(); i+=Parameters.boxSize){
-			for(int j = 0; j < environment.getHeight(); j+=Parameters.boxSize){
+		for(int i = 0; i < environment.getWidth()-Parameters.boxSize; i+=Parameters.boxSize){
+			for(int j = 0; j < environment.getHeight()-Parameters.boxSize; j+=Parameters.boxSize){
 				possiblePositions.add(new Position(i,j));
 			}
 		}
 
-		Random r = new Random(Parameters.seed);
+		Random rand = new Random(Parameters.seed);
+		if(Parameters.seed == 0){
+			rand = new Random();
+		}
 		for(int i = 0; i < Parameters.nbParticles; i++){
-			int index = r.nextInt(possiblePositions.size());
+			int index = rand.nextInt(possiblePositions.size());
 			agentlist.add(new Agent(environment, possiblePositions.get(index)));
 			possiblePositions.remove(index);
 		}
@@ -58,10 +61,11 @@ public class SMA extends Observable {
 			
 			tick++;
 			
-			setChanged();
-            notifyObservers();
-            
-
+			if(tick == 0 || tick % Parameters.refresh == 0){
+				setChanged();
+	            notifyObservers();
+			}
+			
 			long endTime = System.currentTimeMillis();
 			long duration = (endTime - startTime);
 			//System.out.println("Tick time : " + duration);

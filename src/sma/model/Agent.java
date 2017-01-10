@@ -13,6 +13,10 @@ public class Agent {
 
 	public Agent(Environment environment, Position xy) {
 		this.environment = environment;
+		
+		if(Parameters.seed == 0){
+			rand = new Random();
+		}
 
 		int r = rand.nextInt(200);
 		int g = rand.nextInt(200);
@@ -29,9 +33,14 @@ public class Agent {
 
 	public void decide() {
 		if (!haveDecided) {
-			if (!checkWallCollision()) {
+			if(Parameters.toric){
 				checkAgentCollision();
+			}else{
+				if (!checkWallCollision()) {
+					checkAgentCollision();
+				}
 			}
+
 			haveDecided = true;
 		}
 	}
@@ -41,8 +50,9 @@ public class Agent {
 
 		if (!needToFreeze) {
 			environment.agentsPosition[currentPosition.getX()/Parameters.boxSize][currentPosition.getY()/Parameters.boxSize] = null;
-			currentPosition.setX(currentPosition.getX() + nextMove.getX());
-			currentPosition.setY(currentPosition.getY() + nextMove.getY());
+			currentPosition = this.getNextPosition();
+			//currentPosition.setX(currentPosition.getX() + nextMove.getX());
+			//currentPosition.setY(currentPosition.getY() + nextMove.getY());
 			environment.agentsPosition[currentPosition.getX()/Parameters.boxSize][currentPosition.getY()/Parameters.boxSize] = this;
 		} else {
 			needToFreeze = false;
@@ -62,7 +72,25 @@ public class Agent {
 	}
 
 	public Position getNextPosition() {
-		return new Position(currentPosition.getX() + nextMove.getX(), currentPosition.getY() + nextMove.getY());
+		Position nextPosition = new Position((currentPosition.getX() + nextMove.getX()) , currentPosition.getY() + nextMove.getY());
+		if(Parameters.toric){
+			if(nextPosition.getX() < 0){
+				nextPosition.setX((Parameters.gridSizeX-1)*Parameters.boxSize);
+			}
+			if(nextPosition.getX() >= Parameters.gridSizeX*Parameters.boxSize){
+				nextPosition.setX(0);
+			}
+			
+			if(nextPosition.getY() < 0){
+				nextPosition.setY((Parameters.gridSizeY-1)*Parameters.boxSize);
+			}
+			if(nextPosition.getY() >= Parameters.gridSizeY*Parameters.boxSize){
+				nextPosition.setY(0);
+			}
+		}
+		
+		
+		return nextPosition;
 	}
 
 	public Position getCurrentPosition() {
