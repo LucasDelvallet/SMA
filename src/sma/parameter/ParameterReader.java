@@ -58,7 +58,7 @@ public class ParameterReader {
 			this.gridSizeY = Integer.parseInt(param[1]);
 			break;
 		case BOXSIZE:
-			this.gridSizeY = Integer.parseInt(param[1]);
+			this.boxSize = Integer.parseInt(param[1]);
 			break;
 		case DELAY:
 			this.delay = Integer.parseInt(param[1]);

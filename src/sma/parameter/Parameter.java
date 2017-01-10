@@ -53,11 +53,11 @@ public class Parameter {
 		return nbTicks;
 	}
 
-	public boolean isGrid() {
+	public boolean needGrid() {
 		return grid;
 	}
 
-	public boolean isTrace() {
+	public boolean needTrace() {
 		return trace;
 	}
 
