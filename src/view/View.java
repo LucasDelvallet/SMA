@@ -4,24 +4,26 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.*;
+import javax.swing.JPanel;
 
 import sma.model.Agent;
-import sma.model.Parameters;
-import sma.model.SMA;import sun.management.resources.agent;
+import sma.model.SMA;
+import sma.parameter.Parameter;
 
 public class View extends JPanel implements Observer{
 	
+	private static final long serialVersionUID = 1L;
 	private SMA sma;
+	private Parameter parameters;
 	
-	public View(){
+	public View(Parameter parameters){
+		this.parameters = parameters;
 		this.setBackground(Color.WHITE);
-		this.setPreferredSize(new Dimension(Parameters.gridSizeX*Parameters.boxSize,Parameters.gridSizeY*Parameters.boxSize));
+		this.setPreferredSize(new Dimension(parameters.getGridSizeX()*parameters.getBoxSize(),parameters.getGridSizeY()*parameters.getBoxSize()));
 	}
 	
 	public void paint(Graphics g) {
@@ -30,9 +32,9 @@ public class View extends JPanel implements Observer{
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setPaint(Color.GRAY);
 		
-		if(Parameters.grid){
-			int grid_division_x = Parameters.gridSizeX;
-			int grid_division_y = Parameters.gridSizeY;
+		if(parameters.needGrid()){
+			int grid_division_x = parameters.getGridSizeX();
+			int grid_division_y = parameters.getGridSizeY();
 	        for (int i = 1; i < grid_division_x; i++) {
 	           int x = i * (sma.getEnvironment().getWidth() / grid_division_x);
 	           g2.drawLine(x, 0, x, sma.getEnvironment().getHeight());
@@ -47,7 +49,7 @@ public class View extends JPanel implements Observer{
 		for(Agent agent : agentlist){
 			Color c = g2.getColor();
 			g2.setColor(agent.getColor());	
-			g2.fillOval(agent.getCurrentPosition().getX(), agent.getCurrentPosition().getY(), Parameters.boxSize, Parameters.boxSize);
+			g2.fillOval(agent.getCurrentPosition().getX(), agent.getCurrentPosition().getY(), parameters.getBoxSize(), parameters.getBoxSize());
 		}
 		
 		//g2.scale(Parameters.boxSize, Parameters.boxSize);
