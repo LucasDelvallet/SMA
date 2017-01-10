@@ -106,9 +106,7 @@ public class Agent {
 	}
 
 	private void checkAgentCollision() {
-		if (!checkCrossAgentCollision()) {
-			checkOverlapAgentCollision();
-		}
+		checkCrossAgentCollision();
 	}
 	
 	/**
@@ -130,24 +128,24 @@ public class Agent {
 		return false;
 	}
 
-	/**
-	 * @return true if there is a collision
-	 */
-	private boolean checkOverlapAgentCollision() {
-		Position nextPlannedPosition = getNextPosition();
-
-		for (Agent agent : environment.getAgents()) {
-			// Si ce n'est pas lui même
-			if (!agent.equals(this) && !agent.haveDecided && agent.getNextPosition().equals(nextPlannedPosition)) {
-				Position tmp = agent.getNextMove();
-				agent.setNextMove(getNextMove());
-				setNextMove(tmp);
-				return true;
-			}
-		}
-
-		return false;
-	}
+//	/**
+//	 * @return true if there is a collision
+//	 */
+//	private boolean checkOverlapAgentCollision() {
+//		Position nextPlannedPosition = getNextPosition();
+//
+//		for (Agent agent : environment.getAgents()) {
+//			// Si ce n'est pas lui même
+//			if (!agent.equals(this) && !agent.haveDecided && agent.getNextPosition().equals(nextPlannedPosition)) {
+//				Position tmp = agent.getNextMove();
+//				agent.setNextMove(getNextMove());
+//				setNextMove(tmp);
+//				return true;
+//			}
+//		}
+//
+//		return false;
+//	}
 	
 	public boolean needToFreeze() {
 		return needToFreeze;
