@@ -6,7 +6,7 @@ scheduling 0
 nbTicks 3000000
 grid true
 trace false
-seed 1
+seed 2
 refresh 1
 nbParticles 50
 toric false

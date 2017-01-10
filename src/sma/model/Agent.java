@@ -17,11 +17,13 @@ public class Agent {
 	public Agent(Environment environment, Parameter parameters, Position xy) {
 		this.environment = environment;
 		this.parameters = parameters;
-		
-		if(parameters.getSeed() == 0){
-			rand = new Random();
-		} else {
-			rand = new Random(parameters.getSeed());
+
+		if (rand == null) {
+			if (parameters.getSeed() == 0) {
+				rand = new Random();
+			} else {
+				rand = new Random(parameters.getSeed());
+			}
 		}
 
 		int r = rand.nextInt(200);
@@ -39,9 +41,9 @@ public class Agent {
 
 	public void decide() {
 		if (!haveDecided) {
-			if(parameters.isToric()){
+			if (parameters.isToric()) {
 				checkAgentCollision();
-			}else{
+			} else {
 				if (!checkWallCollision()) {
 					checkAgentCollision();
 				}
@@ -55,19 +57,22 @@ public class Agent {
 		haveDecided = false;
 
 		if (!needToFreeze) {
-			environment.agentsPosition[currentPosition.getX()/parameters.getBoxSize()][currentPosition.getY()/parameters.getBoxSize()] = null;
+			environment.agentsPosition[currentPosition.getX() / parameters.getBoxSize()][currentPosition.getY()
+					/ parameters.getBoxSize()] = null;
 			currentPosition = this.getNextPosition();
-			//currentPosition.setX(currentPosition.getX() + nextMove.getX());
-			//currentPosition.setY(currentPosition.getY() + nextMove.getY());
-			environment.agentsPosition[currentPosition.getX()/parameters.getBoxSize()][currentPosition.getY()/parameters.getBoxSize()] = this;
+			// currentPosition.setX(currentPosition.getX() + nextMove.getX());
+			// currentPosition.setY(currentPosition.getY() + nextMove.getY());
+			environment.agentsPosition[currentPosition.getX() / parameters.getBoxSize()][currentPosition.getY()
+					/ parameters.getBoxSize()] = this;
 		} else {
 			needToFreeze = false;
 		}
-		
-		if(parameters.needTrace() && this.needToFreeze){
-			System.out.println("Agent " + color + "  direction x=" + nextMove.getX()/parameters.getBoxSize() + "  y=" + nextMove.getY()/parameters.getBoxSize());
+
+		if (parameters.needTrace() && this.needToFreeze) {
+			System.out.println("Agent " + color + "  direction x=" + nextMove.getX() / parameters.getBoxSize() + "  y="
+					+ nextMove.getY() / parameters.getBoxSize());
 		}
-		
+
 	}
 
 	public Position getNextMove() {
@@ -81,24 +86,24 @@ public class Agent {
 	}
 
 	public Position getNextPosition() {
-		Position nextPosition = new Position((currentPosition.getX() + nextMove.getX()) , currentPosition.getY() + nextMove.getY());
-		if(parameters.isToric()){
-			if(nextPosition.getX() < 0){
-				nextPosition.setX((parameters.getGridSizeX()-1)*parameters.getBoxSize());
+		Position nextPosition = new Position((currentPosition.getX() + nextMove.getX()),
+				currentPosition.getY() + nextMove.getY());
+		if (parameters.isToric()) {
+			if (nextPosition.getX() < 0) {
+				nextPosition.setX((parameters.getGridSizeX() - 1) * parameters.getBoxSize());
 			}
-			if(nextPosition.getX() >= parameters.getGridSizeX()*parameters.getBoxSize()){
+			if (nextPosition.getX() >= parameters.getGridSizeX() * parameters.getBoxSize()) {
 				nextPosition.setX(0);
 			}
-			
-			if(nextPosition.getY() < 0){
-				nextPosition.setY((parameters.getGridSizeY()-1)*parameters.getBoxSize());
+
+			if (nextPosition.getY() < 0) {
+				nextPosition.setY((parameters.getGridSizeY() - 1) * parameters.getBoxSize());
 			}
-			if(nextPosition.getY() >= parameters.getGridSizeY()*parameters.getBoxSize()){
+			if (nextPosition.getY() >= parameters.getGridSizeY() * parameters.getBoxSize()) {
 				nextPosition.setY(0);
 			}
 		}
-		
-		
+
 		return nextPosition;
 	}
 
@@ -145,15 +150,16 @@ public class Agent {
 	private void checkAgentCollision() {
 		checkCrossAgentCollision();
 	}
-	
+
 	/**
 	 * @return true if there is a collision
 	 */
 	private boolean checkCrossAgentCollision() {
 		Position next = getNextPosition();
 		Agent agent = null;
-		
-		if((agent = environment.agentsPosition[next.getX()/parameters.getBoxSize()][next.getY()/parameters.getBoxSize()]) != null) {
+
+		if ((agent = environment.agentsPosition[next.getX() / parameters.getBoxSize()][next.getY()
+				/ parameters.getBoxSize()]) != null) {
 			if (!agent.equals(this) && agent.getCurrentPosition().equals(next)) {
 				Position tmp = agent.getNextMove();
 				agent.setNextMove(getNextMove());
@@ -161,33 +167,34 @@ public class Agent {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 
-//	/**
-//	 * @return true if there is a collision
-//	 */
-//	private boolean checkOverlapAgentCollision() {
-//		Position nextPlannedPosition = getNextPosition();
-//
-//		for (Agent agent : environment.getAgents()) {
-//			// Si ce n'est pas lui même
-//			if (!agent.equals(this) && !agent.haveDecided && agent.getNextPosition().equals(nextPlannedPosition)) {
-//				Position tmp = agent.getNextMove();
-//				agent.setNextMove(getNextMove());
-//				setNextMove(tmp);
-//				return true;
-//			}
-//		}
-//
-//		return false;
-//	}
-	
+	// /**
+	// * @return true if there is a collision
+	// */
+	// private boolean checkOverlapAgentCollision() {
+	// Position nextPlannedPosition = getNextPosition();
+	//
+	// for (Agent agent : environment.getAgents()) {
+	// // Si ce n'est pas lui même
+	// if (!agent.equals(this) && !agent.haveDecided &&
+	// agent.getNextPosition().equals(nextPlannedPosition)) {
+	// Position tmp = agent.getNextMove();
+	// agent.setNextMove(getNextMove());
+	// setNextMove(tmp);
+	// return true;
+	// }
+	// }
+	//
+	// return false;
+	// }
+
 	public boolean needToFreeze() {
 		return needToFreeze;
 	}
-	
+
 	public boolean haveDecided() {
 		return haveDecided;
 	}
