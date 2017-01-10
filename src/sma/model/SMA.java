@@ -30,8 +30,8 @@ public class SMA extends Observable {
 		agentlist = new ArrayList<Agent>();
 		
 		List<Position> possiblePositions = new ArrayList<Position>();
-		for(int i = 0; i < environment.getWidth()-Parameters.boxSize; i+=Parameters.boxSize){
-			for(int j = 0; j < environment.getHeight()-Parameters.boxSize; j+=Parameters.boxSize){
+		for(int i = 0; i < environment.getWidth(); i+=Parameters.boxSize){
+			for(int j = 0; j < environment.getHeight(); j+=Parameters.boxSize){
 				possiblePositions.add(new Position(i,j));
 			}
 		}
@@ -48,33 +48,50 @@ public class SMA extends Observable {
 	}
 	
 	public void run(){
+		Random rand = new Random(Parameters.seed);
 		int tick = 0;
+		long startTimeTotal = System.currentTimeMillis();
 		while(tick < Parameters.nbTicks){
 			long startTime = System.currentTimeMillis();
-			Collections.shuffle(agentlist); //Voir si on laisse on pas, vu que c'est pas affecté par le seed
-
-			for(int i = 0; i < agentlist.size(); i++){
-				agentlist.get(i).decide();
-				agentlist.get(i).update();
-				//System.out.println("Agent " + i + "  position x=" + agentlist.get(i).getCurrentPosition().getX() + "  y=" + agentlist.get(i).getCurrentPosition().getY());
+			switch(Parameters.scheduling){
+			case 0:
+				Collections.shuffle(agentlist,rand);
+			case 1:
+				for(int i = 0; i < agentlist.size(); i++){
+					agentlist.get(i).decide();
+					agentlist.get(i).update();
+				}
+				break;
+			case 2:
+				int indexRand = rand.nextInt(agentlist.size());
+				agentlist.get(indexRand).decide();
+				agentlist.get(indexRand).update();
+				break;
 			}
+
+			
 			
 			tick++;
 			
-			if(tick == 0 || tick % Parameters.refresh == 0){
+			if(Parameters.refresh != 0 && (tick == 0 || tick % Parameters.refresh == 0)){
 				setChanged();
 	            notifyObservers();
 			}
 			
 			long endTime = System.currentTimeMillis();
 			long duration = (endTime - startTime);
-			//System.out.println("Tick time : " + duration);
-            
+			if(Parameters.trace){
+				System.out.println("End of tick "+ tick+"  time : " + duration+"ms");
+			}
+			
             try {
 				Thread.sleep(Parameters.delay);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
+		long endTimeTotal = System.currentTimeMillis();
+		long durationTotal = (endTimeTotal - startTimeTotal);
+		System.out.println("Total time : " + durationTotal +" ms");
 	}
 }

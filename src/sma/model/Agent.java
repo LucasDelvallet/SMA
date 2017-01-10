@@ -57,7 +57,10 @@ public class Agent {
 		} else {
 			needToFreeze = false;
 		}
-
+		
+		if(Parameters.trace && this.needToFreeze){
+			System.out.println("Agent " + color + "  direction x=" + nextMove.getX()/Parameters.boxSize + "  y=" + nextMove.getY()/Parameters.boxSize);
+		}
 		
 	}
 
