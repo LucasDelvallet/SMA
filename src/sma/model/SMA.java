@@ -70,7 +70,7 @@ public class SMA extends Observable {
 
 			long endTime = System.currentTimeMillis();
 			long duration = (endTime - startTime);
-			System.out.println("Tick time : " + duration);
+			//System.out.println("Tick time : " + duration);
             
             try {
 				Thread.sleep(Parameters.delay);

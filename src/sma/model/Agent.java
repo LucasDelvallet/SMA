@@ -42,11 +42,13 @@ public class Agent {
 		if (!needToFreeze) {
 			currentPosition.setX(currentPosition.getX() + nextMove.getX());
 			currentPosition.setY(currentPosition.getY() + nextMove.getY());
+			System.out.println(this.toString() + " X: " + (currentPosition.getX() + nextMove.getX())/Parameters.boxSize + " Y: " + (currentPosition.getY() + nextMove.getY())/Parameters.boxSize);
 		} else {
+			System.out.println(this.toString() + " X: " + (currentPosition.getX())/Parameters.boxSize + " Y: " + (currentPosition.getY())/Parameters.boxSize + " Freezed ");
 			needToFreeze = false;
 		}
 
-		// TODO Set next supposed position
+		
 	}
 
 	public Position getNextMove() {
@@ -85,22 +87,19 @@ public class Agent {
 		if (nextPosition.getX() < 0) {
 			nextMove.setX(-nextMove.getX());
 			res = true;
-			needToFreeze = true;
 		} else if (nextPosition.getX() > border_x) {
 			nextMove.setX(-nextMove.getX());
 			res = true;
-			needToFreeze = true;
 		}
 
 		if (nextPosition.getY() < 0) {
 			nextMove.setY(-nextMove.getY());
 			res = true;
-			needToFreeze = true;
 		} else if (nextPosition.getY() > border_y) {
 			nextMove.setY(-nextMove.getY());
 			res = true;
-			needToFreeze = true;
 		}
+		needToFreeze = res;
 		nextPosition = getNextPosition();
 
 		return res;
@@ -111,21 +110,20 @@ public class Agent {
 			checkOverlapAgentCollision();
 		}
 	}
-
+	
 	/**
 	 * @return true if there is a collision
 	 */
 	private boolean checkCrossAgentCollision() {
+		Position next = getNextPosition();
 		for (Agent agent : environment.getAgents()) {
-			if (!agent.equals(this) && agent.getNextPosition().equals(currentPosition)
-					&& agent.getNextMove().isOpposite(nextMove)) {
+			if (!agent.equals(this) && agent.getCurrentPosition().equals(next)) {
 				Position tmp = agent.getNextMove();
 				agent.setNextMove(getNextMove());
 				setNextMove(tmp);
 				return true;
 			}
 		}
-
 		return false;
 	}
 
@@ -136,8 +134,8 @@ public class Agent {
 		Position nextPlannedPosition = getNextPosition();
 
 		for (Agent agent : environment.getAgents()) {
-			// Si ce n'est pas lui même
-			if (!agent.equals(this) && agent.getNextPosition().equals(nextPlannedPosition)) {
+			// Si ce n'est pas lui mÃªme
+			if (!agent.equals(this) && !agent.haveDecided && agent.getNextPosition().equals(nextPlannedPosition)) {
 				Position tmp = agent.getNextMove();
 				agent.setNextMove(getNextMove());
 				setNextMove(tmp);
@@ -146,6 +144,14 @@ public class Agent {
 		}
 
 		return false;
+	}
+	
+	public boolean needToFreeze() {
+		return needToFreeze;
+	}
+	
+	public boolean haveDecided() {
+		return haveDecided;
 	}
 
 	private void setDirection() {
