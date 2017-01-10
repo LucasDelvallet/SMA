@@ -40,11 +40,11 @@ public class Agent {
 		haveDecided = false;
 
 		if (!needToFreeze) {
+			environment.agentsPosition[currentPosition.getX()/Parameters.boxSize][currentPosition.getY()/Parameters.boxSize] = null;
 			currentPosition.setX(currentPosition.getX() + nextMove.getX());
 			currentPosition.setY(currentPosition.getY() + nextMove.getY());
-			System.out.println(this.toString() + " X: " + (currentPosition.getX() + nextMove.getX())/Parameters.boxSize + " Y: " + (currentPosition.getY() + nextMove.getY())/Parameters.boxSize);
+			environment.agentsPosition[currentPosition.getX()/Parameters.boxSize][currentPosition.getY()/Parameters.boxSize] = this;
 		} else {
-			System.out.println(this.toString() + " X: " + (currentPosition.getX())/Parameters.boxSize + " Y: " + (currentPosition.getY())/Parameters.boxSize + " Freezed ");
 			needToFreeze = false;
 		}
 
@@ -116,7 +116,9 @@ public class Agent {
 	 */
 	private boolean checkCrossAgentCollision() {
 		Position next = getNextPosition();
-		for (Agent agent : environment.getAgents()) {
+		Agent agent = null;
+		
+		if((agent = environment.agentsPosition[next.getX()/Parameters.boxSize][next.getY()/Parameters.boxSize]) != null) {
 			if (!agent.equals(this) && agent.getCurrentPosition().equals(next)) {
 				Position tmp = agent.getNextMove();
 				agent.setNextMove(getNextMove());
@@ -124,6 +126,7 @@ public class Agent {
 				return true;
 			}
 		}
+		
 		return false;
 	}
 
