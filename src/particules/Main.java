@@ -1,10 +1,11 @@
-package sma;
+package particules;
 
 import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JScrollPane;
 
+import core.SMAParticule;
 import sma.model.SMA;
 import sma.parameter.Parameter;
 import sma.parameter.ParameterReader;
@@ -16,7 +17,7 @@ public class Main {
 	public static void main(String[] args) {
 		try {
 			Parameter param = new ParameterReader().getParameters(new File("res/param.txt"));
-			SMA sma = new SMA(param);
+			SMA sma = new SMAParticule(param);
 
 			View view = new View(param);
 			sma.addObserver(view);

@@ -10,7 +10,8 @@ import java.util.Observer;
 
 import javax.swing.JPanel;
 
-import sma.model.Agent;
+import core.Agent;
+import particules.Particule;
 import sma.model.SMA;
 import sma.parameter.Parameter;
 

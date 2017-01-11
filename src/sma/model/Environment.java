@@ -2,6 +2,7 @@ package sma.model;
 
 import java.util.List;
 
+import core.Agent;
 import sma.parameter.Parameter;
 
 public class Environment {
@@ -10,7 +11,7 @@ public class Environment {
 	private int height;
 	private SMA sma;
 	private List<Agent> agentlist;
-	public Agent[][] agentsPosition, plannedAgentPosition;
+	public Agent[][] agentsPosition;
 	private Parameter parameters;
 	
 	public Environment(SMA sma, Parameter parameters){
@@ -20,7 +21,6 @@ public class Environment {
 		this.sma = sma;
 		
 		agentsPosition = new Agent[parameters.getGridSizeX()][parameters.getGridSizeY()];
-		plannedAgentPosition = new Agent[parameters.getGridSizeX()][parameters.getGridSizeY()];
 	}
 	
 	public int getWidth(){

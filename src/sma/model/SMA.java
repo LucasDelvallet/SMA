@@ -6,13 +6,15 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Random;
 
+import core.Agent;
+import particules.Particule;
 import sma.parameter.Parameter;
 
-public class SMA extends Observable {
+public abstract class SMA extends Observable {
 
-	private List<Agent> agentlist;
-	private Environment environment;
-	private Parameter parameters;
+	protected List<Agent> agentlist;
+	protected Environment environment;
+	protected Parameter parameters;
 	
 	public SMA(Parameter parameters){
 		this.parameters = parameters;
@@ -28,27 +30,6 @@ public class SMA extends Observable {
 	
 	public Environment getEnvironment(){
 		return environment;
-	}
-	
-	private void initAgent(Parameter parameters){
-		agentlist = new ArrayList<Agent>();
-		
-		List<Position> possiblePositions = new ArrayList<Position>();
-		for(int i = 0; i < environment.getWidth(); i+=parameters.getBoxSize()){
-			for(int j = 0; j < environment.getHeight(); j+=parameters.getBoxSize()){
-				possiblePositions.add(new Position(i,j));
-			}
-		}
-
-		Random rand = new Random(parameters.getSeed());
-		if(parameters.getSeed() == 0){
-			rand = new Random();
-		}
-		for(int i = 0; i < parameters.getNbParticles(); i++){
-			int index = rand.nextInt(possiblePositions.size());
-			agentlist.add(new Agent(environment, parameters, possiblePositions.get(index)));
-			possiblePositions.remove(index);
-		}
 	}
 	
 	public void run(){
@@ -74,7 +55,6 @@ public class SMA extends Observable {
 			}
 
 			
-			
 			tick++;
 			
 			if(parameters.getRefresh()!= 0 && (tick == 0 || tick % parameters.getRefresh() == 0)){
@@ -98,4 +78,6 @@ public class SMA extends Observable {
 		long durationTotal = (endTimeTotal - startTimeTotal);
 		System.out.println("Total time : " + durationTotal +" ms");
 	}
+	
+	protected abstract void initAgent(Parameter parameters);
 }
