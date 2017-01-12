@@ -43,8 +43,9 @@ public abstract class SMA extends Observable {
 				Collections.shuffle(agentlist,rand);
 			case 1:
 				for(int i = 0; i < agentlist.size(); i++){
-					agentlist.get(i).decide();
-					agentlist.get(i).update();
+					Agent agent = agentlist.get(i);
+					agent.decide();
+					agent.update();
 				}
 				break;
 			case 2:
@@ -77,6 +78,14 @@ public abstract class SMA extends Observable {
 		long endTimeTotal = System.currentTimeMillis();
 		long durationTotal = (endTimeTotal - startTimeTotal);
 		System.out.println("Total time : " + durationTotal +" ms");
+	}
+	
+	public void addAgent(Agent agent){
+		agentlist.add(agent);
+	}
+	
+	public void removeAgent(Agent agent){
+		agentlist.remove(agent);
 	}
 	
 	protected abstract void initAgent(Parameter parameters);

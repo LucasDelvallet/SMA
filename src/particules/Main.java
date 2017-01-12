@@ -5,7 +5,6 @@ import java.io.IOException;
 
 import javax.swing.JScrollPane;
 
-import core.SMAParticule;
 import sma.model.SMA;
 import sma.parameter.Parameter;
 import sma.parameter.ParameterReader;

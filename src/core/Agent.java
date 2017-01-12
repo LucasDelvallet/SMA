@@ -125,5 +125,5 @@ public abstract class Agent {
 	
 	public abstract void decide();
 	public abstract void update();
-	public abstract void agentCollisionReaction(Agent collited);
+	public abstract void agentCollisionReaction(Agent collided);
 }

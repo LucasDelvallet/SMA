@@ -11,6 +11,7 @@ public class Fish extends Animal {
 	public Fish(Environment environment, Parameter parameters, Position xy) {
 		super(environment, parameters, xy);
 		color = Color.GREEN;
+		breedTime = parameters.getFishBreedTime();
 	}
 
 	public void checkCollisions() {
@@ -24,17 +25,33 @@ public class Fish extends Animal {
 		if (parameters.isToric()) {
 			processAgentCollision();
 		} else {
-//			if (!checkWallCollision()) {
-//				checkAgentCollision();
-//			}
+			//if (!checkWallCollision()) {
+			//	processAgentCollision();
+			//}
 		}
-
 	}
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
+		if (!needToFreeze) {
+			
+			environment.agentsPosition[currentPosition.getX() / parameters.getBoxSize()][currentPosition.getY()
+			                                                         					/ parameters.getBoxSize()] = null;
+			
+			if(isMature()){
+				Fish child = new Fish(environment, parameters, currentPosition);
+				child.needToFreeze = true;
+				environment.addAgent(child);
+			}
+			
 
+			currentPosition = this.getNextPosition();
+			environment.agentsPosition[currentPosition.getX() / parameters.getBoxSize()][currentPosition.getY()
+					/ parameters.getBoxSize()] = this;
+		} else {
+			needToFreeze = false;
+		}
+		updateAge();
 	}
 
 	@Override
@@ -43,8 +60,8 @@ public class Fish extends Animal {
 	}
 
 	@Override
-	public void agentCollisionReaction(Agent collited) {
-		// TODO Auto-generated method stub
+	public void agentCollisionReaction(Agent collided) {
+		this.needToFreeze = true;
 	}
 
 }

@@ -42,4 +42,19 @@ public class Environment {
 			agentsPosition[agent.getCurrentPosition().getX()/parameters.getBoxSize()][agent.getCurrentPosition().getY()/parameters.getBoxSize()] = agent;
 		}
 	}
+	
+	public void addAgent(Agent agent){
+		agentsPosition[agent.getCurrentPosition().getX() / parameters.getBoxSize()]
+						[agent.getCurrentPosition().getY() / parameters.getBoxSize()] = agent;
+	
+		sma.addAgent(agent);
+	}
+	
+	public void removeAgent(Agent agent){
+		agentsPosition[agent.getCurrentPosition().getX() / parameters.getBoxSize()]
+						[agent.getCurrentPosition().getY() / parameters.getBoxSize()] = null;
+	
+		sma.removeAgent(agent);
+	
+	}
 }

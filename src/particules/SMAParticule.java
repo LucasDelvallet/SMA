@@ -1,10 +1,10 @@
-package core;
+package particules;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import particules.Particule;
+import core.Agent;
 import sma.model.Position;
 import sma.model.SMA;
 import sma.parameter.Parameter;

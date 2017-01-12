@@ -18,9 +18,14 @@ public class ParameterReader {
 	private static final String REFRESH = "refresh";
 	private static final String NBPARTICLES= "nbParticles";
 	private static final String TORIC = "toric";
+	private static final String NBFISHS = "nbFishs";
+	private static final String FISHBREEDTIME= "fishBreedTime";
+	private static final String NBSHARKS = "nbSharks";
+	private static final String SHARKBREEDTIME = "sharkBreedTime";
+	private static final String SHARKSTARVETIME = "sharkStarveTime";
 	// Default values
-	private int gridSizeX = 70;
-	private int gridSizeY = 70;
+	private int gridSizeX = 200;
+	private int gridSizeY = 200;
 	private int boxSize = 7;
 	private int delay = 130;
 	private int scheduling = 0; //TODO 0:equitable 1:sequentiel, 2:aléatoire 
@@ -30,7 +35,12 @@ public class ParameterReader {
 	private int seed = 1;
 	private int refresh = 1;
 	private int nbParticles = 50;
-	private boolean toric = false;
+	private boolean toric = false;	
+	private int nbFishs = 30;
+	private int fishBreedTime = 3;
+	private int nbSharks = 10;
+	private int sharkBreedTime = 5;
+	private int sharkStarveTime = 4;
 	
 	public Parameter getParameters(File paramFile) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(paramFile));
@@ -44,7 +54,7 @@ public class ParameterReader {
 		    br.close();
 		}
 		
-		return new Parameter(gridSizeX, gridSizeY, boxSize, delay, scheduling, nbTicks, grid, trace, seed, refresh, nbParticles, toric);
+		return new Parameter(gridSizeX, gridSizeY, boxSize, delay, scheduling, nbTicks, grid, trace, seed, refresh, nbParticles, toric, nbFishs, fishBreedTime, nbSharks, sharkBreedTime, sharkStarveTime);
 	}
 	
 	private void setVariable(String line) {
@@ -86,6 +96,21 @@ public class ParameterReader {
 			break;
 		case TORIC:
 			this.toric = Boolean.parseBoolean(param[1]);
+			break;
+		case NBFISHS:
+			this.nbFishs = Integer.parseInt(param[1]);
+			break;
+		case FISHBREEDTIME:
+			this.fishBreedTime = Integer.parseInt(param[1]);
+			break;
+		case NBSHARKS:
+			this.nbSharks = Integer.parseInt(param[1]);
+			break;
+		case SHARKBREEDTIME:
+			this.sharkBreedTime = Integer.parseInt(param[1]);
+			break;
+		case SHARKSTARVETIME:
+			this.sharkStarveTime = Integer.parseInt(param[1]);
 			break;
 		default:
 			break;
