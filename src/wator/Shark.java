@@ -75,7 +75,7 @@ public class Shark extends Animal {
 			environment.agentsPosition[currentPosition.getX() / parameters.getBoxSize()][currentPosition.getY()
 			                                                         					/ parameters.getBoxSize()] = null;
 			
-			if(isMature()){
+			if(isMature() && canReproduce()){
 				Shark child = new Shark(environment, parameters, currentPosition);
 				child.needToFreeze = true;
 				environment.addAgent(child);
@@ -107,5 +107,10 @@ public class Shark extends Animal {
 		}else{
 			this.needToFreeze = true;
 		}
+	}
+	
+	@Override
+	public String trace(){
+		return "Shark;";
 	}
 }

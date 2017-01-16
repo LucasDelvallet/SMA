@@ -38,7 +38,7 @@ public class Fish extends Animal {
 			environment.agentsPosition[currentPosition.getX() / parameters.getBoxSize()][currentPosition.getY()
 			                                                         					/ parameters.getBoxSize()] = null;
 			
-			if(isMature()){
+			if(isMature() && canReproduce()){
 				Fish child = new Fish(environment, parameters, currentPosition);
 				child.needToFreeze = true;
 				environment.addAgent(child);
@@ -62,6 +62,11 @@ public class Fish extends Animal {
 	@Override
 	public void agentCollisionReaction(Agent collided) {
 		this.needToFreeze = true;
+	}
+	
+	@Override
+	public String trace(){
+		return "Fish;";
 	}
 
 }

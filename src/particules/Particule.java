@@ -46,10 +46,8 @@ public class Particule extends Agent {
 		}
 
 		if (parameters.needTrace() && this.needToFreeze) {
-			System.out.println("Particles " + color + "  direction x=" + nextMove.getX() / parameters.getBoxSize() + "  y="
-					+ nextMove.getY() / parameters.getBoxSize());
+			System.out.println(trace());
 		}
-
 	}
 
 	/**
@@ -93,6 +91,12 @@ public class Particule extends Agent {
 		Position tmp = collided.getNextMove();
 		collided.setNextMove(getNextMove());
 		setNextMove(tmp);
+	}
+	
+	@Override
+	public String trace(){
+		return "Particle;" + color + ";x=" + nextMove.getX() / parameters.getBoxSize() + ";y="
+				+ nextMove.getY() / parameters.getBoxSize();
 	}
 	
 }

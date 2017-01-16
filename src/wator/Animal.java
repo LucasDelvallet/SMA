@@ -24,6 +24,10 @@ public abstract class Animal extends Agent {
 		return age >= breedTime;
 	}
 	
+	protected boolean canReproduce(){
+		return age % breedTime == 0;
+	}
+	
 	
 	protected abstract void setMature();
 }

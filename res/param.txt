@@ -3,7 +3,7 @@
 gridSizeX 90
 gridSizeY 90
 boxSize 7
-delay 70
+delay 16
 scheduling 0
 nbTicks 3000000
 grid false
