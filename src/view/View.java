@@ -20,11 +20,15 @@ public class View extends JPanel implements Observer{
 	private static final long serialVersionUID = 1L;
 	private SMA sma;
 	private Parameter parameters;
+	private Graph graph;
 	
 	public View(Parameter parameters){
 		this.parameters = parameters;
 		this.setBackground(Color.WHITE);
 		this.setPreferredSize(new Dimension(parameters.getGridSizeX()*parameters.getBoxSize(),parameters.getGridSizeY()*parameters.getBoxSize()));
+	
+		graph = new Graph();
+		graph.display(parameters.getDelay());
 	}
 	
 	public void paint(Graphics g) {
@@ -46,14 +50,26 @@ public class View extends JPanel implements Observer{
 	        }
 		}
 		
+		int nbShark = 0;
+		int nbFish = 0;
 		List<Agent> agentlist = sma.getAgentlist();
 		for(int i = 0; i < agentlist.size(); i++){
 			Agent agent = agentlist.get(i);
 			Color c = g2.getColor();
 			g2.setColor(agent.getColor());	
 			g2.fillOval(agent.getCurrentPosition().getX(), agent.getCurrentPosition().getY(), parameters.getBoxSize(), parameters.getBoxSize());
+			String agentType = agent.getClass().getSimpleName();
+			switch(agentType){
+				case "Fish":
+					nbFish++;
+					break;
+				case "Shark":
+					nbShark++;
+					break;
+			}
 		}
 		
+		graph.update(nbShark, nbFish);
 		//g2.scale(Parameters.boxSize, Parameters.boxSize);
 	}
 

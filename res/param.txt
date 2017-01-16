@@ -1,9 +1,9 @@
 #Global Parameters#
 
-gridSizeX 5
-gridSizeY 5
-boxSize 50
-delay 2000
+gridSizeX 100
+gridSizeY 100
+boxSize 5
+delay 100
 scheduling 0
 nbTicks 3000000
 grid false
@@ -18,8 +18,8 @@ nbParticles 10
 
 #WaTor specific parameters#
 
-nbFishs 3
+nbFishs 100
 fishBreedTime 3
-nbSharks 1
+nbSharks 300
 sharkBreedTime 9
 sharkStarveTime 8
