@@ -1,7 +1,6 @@
 package particules;
 
 import java.awt.Color;
-import java.util.Random;
 
 import core.Agent;
 import sma.model.Environment;
@@ -23,13 +22,14 @@ public class Particule extends Agent {
 
 	@Override
 	public void decide() {
-		if (parameters.isToric()) {
-			processAgentCollision();
-		} else {
-			if (!checkWallCollision()) {
-				processAgentCollision();
-			}
-		}
+//		if (parameters.isToric()) {
+//			processAgentCollision();
+//		} else {
+//			if (!checkWallCollision()) {
+//				processAgentCollision();
+//			}
+//		}
+		processAgentCollision();
 	}
 
 	@Override
@@ -50,37 +50,7 @@ public class Particule extends Agent {
 		}
 	}
 
-	/**
-	 * @return true if there is a collision
-	 */
-	private boolean checkWallCollision() {
-		// Check wall colision
 
-		int border_x = environment.getWidth() - parameters.getBoxSize();
-		int border_y = environment.getHeight() - parameters.getBoxSize();
-		Position nextPosition = getNextPosition();
-		boolean res = false;
-
-		if (nextPosition.getX() < 0) {
-			nextMove.setX(-nextMove.getX());
-			res = true;
-		} else if (nextPosition.getX() > border_x) {
-			nextMove.setX(-nextMove.getX());
-			res = true;
-		}
-
-		if (nextPosition.getY() < 0) {
-			nextMove.setY(-nextMove.getY());
-			res = true;
-		} else if (nextPosition.getY() > border_y) {
-			nextMove.setY(-nextMove.getY());
-			res = true;
-		}
-		needToFreeze = res;
-		nextPosition = getNextPosition();
-
-		return res;
-	}
 
 	public boolean needToFreeze() {
 		return needToFreeze;
@@ -98,5 +68,5 @@ public class Particule extends Agent {
 		return "Particle;" + color + ";x=" + nextMove.getX() / parameters.getBoxSize() + ";y="
 				+ nextMove.getY() / parameters.getBoxSize();
 	}
-	
+
 }
