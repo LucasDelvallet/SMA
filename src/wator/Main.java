@@ -18,7 +18,7 @@ public class Main {
 			Parameter param = new ParameterReader().getParameters(new File("res/param.txt"));
 			SMA sma = new SMAWaTor(param);
 
-			View view = new View(param);
+			View view = new View(param, true);
 			sma.addObserver(view);
 			
 			JScrollPane scrollPane = new JScrollPane(view);

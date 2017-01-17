@@ -11,6 +11,9 @@ import java.util.Observer;
 import javax.swing.JPanel;
 
 import core.Agent;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.stage.Stage;
 import particules.Particule;
 import sma.model.SMA;
 import sma.parameter.Parameter;
@@ -20,15 +23,23 @@ public class View extends JPanel implements Observer{
 	private static final long serialVersionUID = 1L;
 	private SMA sma;
 	private Parameter parameters;
-	private Graph graph;
+	private WatorNumberGraph watorNumberGraph;
+	private WatorRatioGraph watorRatioGraph;
+	private boolean displayGraph;
 	
-	public View(Parameter parameters){
+	public View(Parameter parameters, boolean displayGraph){
 		this.parameters = parameters;
+		this.displayGraph = displayGraph;
 		this.setBackground(Color.WHITE);
 		this.setPreferredSize(new Dimension(parameters.getGridSizeX()*parameters.getBoxSize(),parameters.getGridSizeY()*parameters.getBoxSize()));
 	
-		graph = new Graph();
-		graph.display(parameters.getDelay());
+		if(displayGraph){
+			
+			watorNumberGraph = new WatorNumberGraph();
+			watorNumberGraph.display();
+			
+			watorRatioGraph = new WatorRatioGraph();
+		}
 	}
 	
 	public void paint(Graphics g) {
@@ -68,9 +79,10 @@ public class View extends JPanel implements Observer{
 					break;
 			}
 		}
-		
-		graph.update(nbShark, nbFish);
-		//g2.scale(Parameters.boxSize, Parameters.boxSize);
+		if(displayGraph){
+			watorNumberGraph.update(nbShark, nbFish);
+			watorRatioGraph.update(nbShark, nbFish);
+		}
 	}
 
 	@Override
