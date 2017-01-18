@@ -16,9 +16,10 @@ public class Main {
 	public static void main(String[] args) {
 		try {
 			Parameter param = new ParameterReader().getParameters(new File("res/param.txt"));
-			SMA sma = new SMAPacman(param);
-
+			
 			View view = new View(param, false);
+			view.setFocusable(true);
+			SMA sma = new SMAPacman(param, view);
 			sma.addObserver(view);
 			
 			JScrollPane scrollPane = new JScrollPane(view);

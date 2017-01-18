@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.swing.JPanel;
+
 import core.Agent;
 import sma.model.Position;
 import sma.model.SMA;
@@ -11,8 +13,9 @@ import sma.parameter.Parameter;
 
 public class SMAPacman extends SMA {
 
-	public SMAPacman(Parameter parameters) {
+	public SMAPacman(Parameter parameters, JPanel panel) {
 		super(parameters);
+		bindAvatar(panel);
 	}
 
 	@Override
@@ -32,9 +35,16 @@ public class SMAPacman extends SMA {
 		}
 
 		int index = rand.nextInt(possiblePositions.size());
-//		agentlist.add(new Avatar(environment, parameters, possiblePositions.get(index)));
+		agentlist.add(new Avatar(environment, parameters, possiblePositions.get(index)));
 		possiblePositions.remove(index);
 			
 	}
 
+	private void bindAvatar(JPanel panel) {
+		for(Agent a : agentlist) {
+			if(a instanceof Avatar) {
+				panel.addKeyListener((Avatar)a);
+			}
+		}
+	}
 }
