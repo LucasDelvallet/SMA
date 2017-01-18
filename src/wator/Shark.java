@@ -41,13 +41,6 @@ public class Shark extends Animal {
 			setRandomDirection();
 		}
 
-//		if (parameters.isToric()) {
-//			processAgentCollision();
-//		} else {
-//			//if (!checkWallCollision()) {
-//			//	processAgentCollision();
-//			//}
-//		}
 		processAgentCollision();
 	}
 	

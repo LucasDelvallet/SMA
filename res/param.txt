@@ -1,12 +1,12 @@
 #Global Parameters#
 
-gridSizeX 100
-gridSizeY 100
-boxSize 5
+gridSizeX 20
+gridSizeY 20
+boxSize 40
 delay 100
 scheduling 0
 nbTicks 3000000
-grid false
+grid true
 trace false
 seed 1
 refresh 1
@@ -14,7 +14,7 @@ toric true
 
 #Particles specific parameters#
 
-nbParticles 10
+nbParticles 1
 
 #WaTor specific parameters#
 

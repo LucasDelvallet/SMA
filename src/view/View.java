@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Toolkit;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -11,10 +12,6 @@ import java.util.Observer;
 import javax.swing.JPanel;
 
 import core.Agent;
-import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
-import javafx.stage.Stage;
-import particules.Particule;
 import sma.model.SMA;
 import sma.parameter.Parameter;
 
@@ -44,7 +41,6 @@ public class View extends JPanel implements Observer{
 	
 	public void paint(Graphics g) {
 		super.paint(g);
-		
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setPaint(Color.GRAY);
 		
@@ -83,6 +79,7 @@ public class View extends JPanel implements Observer{
 			watorNumberGraph.update(nbShark, nbFish);
 			watorRatioGraph.update(nbShark, nbFish);
 		}
+		Toolkit.getDefaultToolkit().sync();
 	}
 
 	@Override

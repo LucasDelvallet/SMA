@@ -22,13 +22,6 @@ public class Particule extends Agent {
 
 	@Override
 	public void decide() {
-//		if (parameters.isToric()) {
-//			processAgentCollision();
-//		} else {
-//			if (!checkWallCollision()) {
-//				processAgentCollision();
-//			}
-//		}
 		processAgentCollision();
 	}
 

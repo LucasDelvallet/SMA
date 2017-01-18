@@ -21,14 +21,6 @@ public class Fish extends Animal {
 	@Override
 	public void decide() {
 		setRandomDirection();
-
-//		if (parameters.isToric()) {
-//			processAgentCollision();
-//		} else {
-//			//if (!checkWallCollision()) {
-//			//	processAgentCollision();
-//			//}
-//		}
 		processAgentCollision();
 	}
 
