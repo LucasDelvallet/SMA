@@ -59,7 +59,7 @@ public class Fish extends Animal {
 	
 	@Override
 	public String trace(){
-		return "Fish;";
+		return "Fish;";// TODO
 	}
 
 }

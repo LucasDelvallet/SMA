@@ -105,6 +105,6 @@ public class Shark extends Animal {
 	
 	@Override
 	public String trace(){
-		return "Shark;";
+		return "Shark;"; // TODO
 	}
 }
