@@ -1,7 +1,7 @@
 #Global Parameters#
 
-gridSizeX 20
-gridSizeY 20
+gridSizeX 5
+gridSizeY 5
 boxSize 40
 delay 100
 scheduling 0
@@ -10,7 +10,7 @@ grid true
 trace false
 seed 1
 refresh 1
-toric true
+toric false
 
 #Particles specific parameters#
 
@@ -25,4 +25,5 @@ sharkBreedTime 9
 sharkStarveTime 8
 
 #Pacman
+
 wallsPercentage 30

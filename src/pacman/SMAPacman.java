@@ -46,7 +46,6 @@ public class SMAPacman extends SMA {
 
 	private void setWalls(Parameter parameters, Random rand, List<Position> possiblePositions) {
 		int index, nbWall;
-
 		nbWall = ((parameters.getGridSizeX() * parameters.getGridSizeY()) * parameters.getWallsPercent()) / 100;
 
 		for (int i = 0; i < nbWall; i++) {

@@ -1,11 +1,8 @@
 package pacman;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
-import javax.swing.AbstractAction;
 
 import core.Agent;
 import sma.model.Environment;
@@ -41,6 +38,30 @@ public class Avatar extends Agent implements KeyListener {
 		}
 		
 	}
+	
+	@Override
+	protected boolean processWallCollision() {
+		int border_x = environment.getWidth() - parameters.getBoxSize();
+		int border_y = environment.getHeight() - parameters.getBoxSize();
+		Position nextPosition = getNextPosition();
+		boolean res = false;
+
+		if (nextPosition.getX() < 0) {
+			res = true;
+		} else if (nextPosition.getX() > border_x) {
+			res = true;
+		}
+
+		if (nextPosition.getY() < 0) {
+			res = true;
+		} else if (nextPosition.getY() > border_y) {
+			res = true;
+		}
+		
+		needToFreeze = res;
+
+		return res;
+	}
 
 	@Override
 	public void agentCollisionReaction(Agent collided) {
@@ -50,20 +71,6 @@ public class Avatar extends Agent implements KeyListener {
 	@Override
 	public String trace() {
 		return ""; // TODO
-	}
-
-	class AvatarKeyboardMove extends AbstractAction {
-		private static final long serialVersionUID = 1L;
-		private Position direction;
-		
-		public AvatarKeyboardMove(Position direction) {
-			this.direction = direction;
-		}
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			nextMove = direction;
-		}
 	}
 
 	@Override
