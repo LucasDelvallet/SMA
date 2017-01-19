@@ -23,3 +23,6 @@ fishBreedTime 3
 nbSharks 300
 sharkBreedTime 9
 sharkStarveTime 8
+
+#Pacman
+wallsPercentage 30

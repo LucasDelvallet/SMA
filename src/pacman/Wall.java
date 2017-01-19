@@ -31,7 +31,6 @@ public class Wall extends Agent {
 
 	@Override
 	public String trace() {
-		// Nothing
 		return "";
 	}
 

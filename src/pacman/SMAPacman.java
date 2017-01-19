@@ -34,16 +34,32 @@ public class SMAPacman extends SMA {
 			rand = new Random();
 		}
 
+		setAvatar(rand, possiblePositions);
+		setWalls(parameters, rand, possiblePositions);
+	}
+
+	private void setAvatar(Random rand, List<Position> possiblePositions) {
 		int index = rand.nextInt(possiblePositions.size());
 		agentlist.add(new Avatar(environment, parameters, possiblePositions.get(index)));
 		possiblePositions.remove(index);
-			
+	}
+
+	private void setWalls(Parameter parameters, Random rand, List<Position> possiblePositions) {
+		int index, nbWall;
+
+		nbWall = ((parameters.getGridSizeX() * parameters.getGridSizeY()) * parameters.getWallsPercent()) / 100;
+
+		for (int i = 0; i < nbWall; i++) {
+			index = rand.nextInt(possiblePositions.size());
+			agentlist.add(new Wall(environment, parameters, possiblePositions.get(index)));
+			possiblePositions.remove(index);
+		}
 	}
 
 	private void bindAvatar(JPanel panel) {
-		for(Agent a : agentlist) {
-			if(a instanceof Avatar) {
-				panel.addKeyListener((Avatar)a);
+		for (Agent a : agentlist) {
+			if (a instanceof Avatar) {
+				panel.addKeyListener((Avatar) a);
 			}
 		}
 	}

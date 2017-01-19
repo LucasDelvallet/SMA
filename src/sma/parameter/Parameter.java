@@ -19,7 +19,9 @@ public class Parameter {
 	private int sharkBreedTime;
 	private int sharkStarveTime;
 	
-	public Parameter(int gridSizeX, int gridSizeY, int boxSize, int delay, int scheduling, int nbTicks, boolean grid, boolean trace, int seed, int refresh, int nbParticles, boolean toric, int nbFishs, int fishBreedTime, int nbSharks, int sharkBreedTime, int sharkStarveTime) {
+	private int wallsPercentage;
+	
+	public Parameter(int gridSizeX, int gridSizeY, int boxSize, int delay, int scheduling, int nbTicks, boolean grid, boolean trace, int seed, int refresh, int nbParticles, boolean toric, int nbFishs, int fishBreedTime, int nbSharks, int sharkBreedTime, int sharkStarveTime, int wallsPercentage) {
 		this.gridSizeX = gridSizeX;
 		this.gridSizeY = gridSizeY;
 		this.boxSize = boxSize;
@@ -37,6 +39,7 @@ public class Parameter {
 		this.nbSharks = nbSharks;
 		this.sharkBreedTime = sharkBreedTime;
 		this.sharkStarveTime = sharkStarveTime;
+		this.wallsPercentage = wallsPercentage;
 	}
 
 	public int getGridSizeX() {
@@ -107,4 +110,7 @@ public class Parameter {
 		return sharkStarveTime;
 	}
 	
+	public int getWallsPercent() {
+		return wallsPercentage;
+	}
 }

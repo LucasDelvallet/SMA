@@ -23,6 +23,7 @@ public class ParameterReader {
 	private static final String NBSHARKS = "nbSharks";
 	private static final String SHARKBREEDTIME = "sharkBreedTime";
 	private static final String SHARKSTARVETIME = "sharkStarveTime";
+	private static final String WALLSPERCENTAGE = "wallsPercentage";
 	// Default values
 	private int gridSizeX = 200;
 	private int gridSizeY = 200;
@@ -41,6 +42,7 @@ public class ParameterReader {
 	private int nbSharks = 10;
 	private int sharkBreedTime = 5;
 	private int sharkStarveTime = 4;
+	private int wallsPercentage = 30;
 	
 	public Parameter getParameters(File paramFile) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(paramFile));
@@ -54,7 +56,7 @@ public class ParameterReader {
 		    br.close();
 		}
 		
-		return new Parameter(gridSizeX, gridSizeY, boxSize, delay, scheduling, nbTicks, grid, trace, seed, refresh, nbParticles, toric, nbFishs, fishBreedTime, nbSharks, sharkBreedTime, sharkStarveTime);
+		return new Parameter(gridSizeX, gridSizeY, boxSize, delay, scheduling, nbTicks, grid, trace, seed, refresh, nbParticles, toric, nbFishs, fishBreedTime, nbSharks, sharkBreedTime, sharkStarveTime, wallsPercentage);
 	}
 	
 	private void setVariable(String line) {
@@ -111,6 +113,9 @@ public class ParameterReader {
 			break;
 		case SHARKSTARVETIME:
 			this.sharkStarveTime = Integer.parseInt(param[1]);
+			break;
+		case WALLSPERCENTAGE:
+			this.wallsPercentage = Integer.parseInt(param[1]);
 			break;
 		default:
 			break;
