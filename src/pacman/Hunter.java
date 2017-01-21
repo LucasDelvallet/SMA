@@ -13,25 +13,21 @@ public class Hunter extends Agent {
 
 	@Override
 	public void decide() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void agentCollisionReaction(Agent collided) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public String trace() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

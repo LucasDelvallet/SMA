@@ -14,9 +14,12 @@ import sma.parameter.Parameter;
  */
 public class Avatar extends Agent implements KeyListener {
 
-	public Avatar(Environment environment, Parameter parameters, Position xy) {
+	private Dijkstra dijkstra;
+	
+	public Avatar(Environment environment, Parameter parameters, Position xy, Dijkstra dijkstra) {
 		super(environment, parameters, xy);
 		color = Color.GREEN;
+		this.dijkstra = dijkstra;
 	}
 	
 	@Override
@@ -32,7 +35,9 @@ public class Avatar extends Agent implements KeyListener {
 			currentPosition = this.getNextPosition();
 			environment.agentsPosition[currentPosition.getX() / parameters.getBoxSize()][currentPosition.getY()
 					/ parameters.getBoxSize()] = this;
-			// TODO Remplir Didi
+
+			dijkstra.compute(this.getCurrentIndex());
+			
 		} else {
 			needToFreeze = false;
 		}

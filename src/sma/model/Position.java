@@ -35,6 +35,12 @@ public class Position {
 		return (other.x == x) && (other.y == y); 
 	}
 	
+	@Override
+	public int hashCode(){
+	      int tmp = ( y +  ((x+1)/2));
+          return x +  ( tmp * tmp);
+	}
+	
 	public boolean isOpposite(Position p) {
 		return (-p.getX() == x) && (-p.getY() == y);
 	}

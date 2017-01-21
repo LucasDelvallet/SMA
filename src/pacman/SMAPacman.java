@@ -13,6 +13,8 @@ import sma.parameter.Parameter;
 
 public class SMAPacman extends SMA {
 
+	private Dijkstra dijkstra;
+	
 	public SMAPacman(Parameter parameters, JPanel panel) {
 		super(parameters);
 		bindAvatar(panel);
@@ -20,6 +22,8 @@ public class SMAPacman extends SMA {
 
 	@Override
 	protected void initAgent(Parameter parameters) {
+		dijkstra = new Dijkstra(parameters.getGridSizeX(), parameters.getGridSizeY(), this);
+		
 		agentlist = new ArrayList<Agent>();
 
 		List<Position> possiblePositions = new ArrayList<Position>();
@@ -40,7 +44,7 @@ public class SMAPacman extends SMA {
 
 	private void setAvatar(Random rand, List<Position> possiblePositions) {
 		int index = rand.nextInt(possiblePositions.size());
-		agentlist.add(new Avatar(environment, parameters, possiblePositions.get(index)));
+		environment.addAgent(new Avatar(environment, parameters, possiblePositions.get(index), dijkstra));
 		possiblePositions.remove(index);
 	}
 
@@ -50,7 +54,7 @@ public class SMAPacman extends SMA {
 
 		for (int i = 0; i < nbWall; i++) {
 			index = rand.nextInt(possiblePositions.size());
-			agentlist.add(new Wall(environment, parameters, possiblePositions.get(index)));
+			environment.addAgent(new Wall(environment, parameters, possiblePositions.get(index)));
 			possiblePositions.remove(index);
 		}
 	}

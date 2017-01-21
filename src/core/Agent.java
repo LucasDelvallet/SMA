@@ -35,6 +35,10 @@ public abstract class Agent {
 	public Position getCurrentPosition() {
 		return currentPosition;
 	}
+	
+	public Position getCurrentIndex(){
+		return new Position(currentPosition.getX()/parameters.getBoxSize(), currentPosition.getY()/parameters.getBoxSize());
+	}
 
 	public Position getNextMove() {
 		return nextMove;

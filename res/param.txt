@@ -1,8 +1,8 @@
 #Global Parameters#
 
-gridSizeX 5
-gridSizeY 5
-boxSize 40
+gridSizeX 30
+gridSizeY 30
+boxSize 20
 delay 100
 scheduling 0
 nbTicks 3000000
