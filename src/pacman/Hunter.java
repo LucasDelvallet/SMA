@@ -44,7 +44,11 @@ public class Hunter extends Agent {
 
 	@Override
 	public void agentCollisionReaction(Agent collided) {
-		
+		if(collided.getClass().getSimpleName().equals("Avatar")){
+			this.parameters.setEndOfGame();
+		}else{
+			this.needToFreeze = true;
+		}
 	}
 
 	@Override

@@ -113,4 +113,8 @@ public class Parameter {
 	public int getWallsPercent() {
 		return wallsPercentage;
 	}
+	
+	public void setEndOfGame(){
+		this.nbTicks = 0;
+	}
 }
