@@ -11,6 +11,7 @@ import sma.model.Position;
 public class Dijkstra {
 	private int[][] cells;
 	private Set<Position> unvisited ;
+	private Set<Position> visited ;
 	private SMAPacman sma;
 	private List<Position> surroundings ;
 	
@@ -18,6 +19,7 @@ public class Dijkstra {
 		this.sma = sma;
 		cells = new int[sizeX][sizeY];
 		unvisited = new HashSet<Position>();
+		visited = new HashSet<Position>();
 		
 		surroundings = new ArrayList<Position>();
 		surroundings.add(new Position(1, 0));
@@ -57,12 +59,15 @@ public class Dijkstra {
 	public void compute(Position avatar) {
 		Agent[][] agents = sma.getEnvironment().agentsPosition;
 		
+		unvisited.clear();
+		visited.clear();
+		
 		Position currentCell ; 
 		for(int x = 0; x < cells.length; x++){
 			for(int y = 0; y < cells[x].length; y++){
 				cells[x][y] =  cells.length * cells[x].length;
-				if(!(sma.getEnvironment().agentsPosition[x][y] != null && sma.getEnvironment().agentsPosition[x][y].getClass().getSimpleName().equals("Wall"))){
-					unvisited.add(new Position(x,y));
+				if((sma.getEnvironment().agentsPosition[x][y] != null && sma.getEnvironment().agentsPosition[x][y].getClass().getSimpleName().equals("Wall"))){
+					visited.add(new Position(x,y));
 				}
 			}
 		}
@@ -78,6 +83,9 @@ public class Dijkstra {
 					currentCell = p;
 					lowestValue = pValue;
 				}
+			}
+			if(lowestValue == cells.length * cells[0].length){
+				break;
 			}
 			visitNeighborhood(currentCell);
 		}
@@ -96,10 +104,17 @@ public class Dijkstra {
 		visitNeighbor(currentCell.getX()+1, currentCell.getY()-1,currentValue);
 
 		unvisited.remove(currentCell);
+		visited.add(currentCell);
 	}
 	
 	private void visitNeighbor(int x, int y, int value){
-		if(x >= 0 && y >= 0 && x < cells.length && y < cells[0].length && unvisited.contains(new Position(x,y))){
+		Position p = new Position(x,y);
+		if(x >= 0 && y >= 0 && x < cells.length && y < cells[0].length && !visited.contains(p)){
+			
+			//if(!(sma.getEnvironment().agentsPosition[x][y] != null && sma.getEnvironment().agentsPosition[x][y].getClass().getSimpleName().equals("Wall"))){
+			unvisited.add(p);
+			//}
+			
 			if(cells[x][y] > value + 1){
 				cells[x][y] = value + 1;
 			}

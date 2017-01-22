@@ -2,7 +2,7 @@
 
 gridSizeX 30
 gridSizeY 30
-boxSize 10
+boxSize 20
 delay 1000
 scheduling 0
 nbTicks 3000000
