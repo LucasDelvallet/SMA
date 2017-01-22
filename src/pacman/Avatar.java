@@ -76,7 +76,12 @@ public class Avatar extends Agent implements KeyListener {
 
 	@Override
 	public void agentCollisionReaction(Agent collided) {
-		this.needToFreeze = true;
+		if(collided.getClass().getSimpleName().equals("Avatar")){
+			environment.removeAgent(collided);
+			// TODO devenir invisible.
+		}else{
+			this.needToFreeze = true;
+		}
 	}
 
 	@Override
