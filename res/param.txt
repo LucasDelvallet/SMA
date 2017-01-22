@@ -2,13 +2,13 @@
 
 gridSizeX 30
 gridSizeY 30
-boxSize 20
-delay 100
+boxSize 10
+delay 1000
 scheduling 0
 nbTicks 3000000
 grid true
 trace false
-seed 1
+seed 2
 refresh 1
 toric false
 
@@ -26,4 +26,4 @@ sharkStarveTime 8
 
 #Pacman
 
-wallsPercentage 30
+wallsPercentage 20

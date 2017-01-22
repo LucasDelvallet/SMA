@@ -40,6 +40,7 @@ public class SMAPacman extends SMA {
 
 		setAvatar(rand, possiblePositions);
 		setWalls(parameters, rand, possiblePositions);
+		setHunters(parameters, rand, possiblePositions);
 	}
 
 	private void setAvatar(Random rand, List<Position> possiblePositions) {
@@ -55,6 +56,17 @@ public class SMAPacman extends SMA {
 		for (int i = 0; i < nbWall; i++) {
 			index = rand.nextInt(possiblePositions.size());
 			environment.addAgent(new Wall(environment, parameters, possiblePositions.get(index)));
+			possiblePositions.remove(index);
+		}
+	}
+	
+	private void setHunters(Parameter parameters, Random rand, List<Position> possiblePositions) {
+		int index, nbHunter;
+		nbHunter = 5;
+
+		for (int i = 0; i < nbHunter; i++) {
+			index = rand.nextInt(possiblePositions.size());
+			environment.addAgent(new Hunter(environment, parameters, possiblePositions.get(index), dijkstra));
 			possiblePositions.remove(index);
 		}
 	}
