@@ -18,10 +18,14 @@ public class Parameter {
 	private int nbSharks;
 	private int sharkBreedTime;
 	private int sharkStarveTime;
+	private int nbHunters;
+	private int speedHunter;
+	private int speedAvatar;
+	private int defenderLife;
 	
 	private int wallsPercentage;
 	
-	public Parameter(int gridSizeX, int gridSizeY, int boxSize, int delay, int scheduling, int nbTicks, boolean grid, boolean trace, int seed, int refresh, int nbParticles, boolean toric, int nbFishs, int fishBreedTime, int nbSharks, int sharkBreedTime, int sharkStarveTime, int wallsPercentage) {
+	public Parameter(int gridSizeX, int gridSizeY, int boxSize, int delay, int scheduling, int nbTicks, boolean grid, boolean trace, int seed, int refresh, int nbParticles, boolean toric, int nbFishs, int fishBreedTime, int nbSharks, int sharkBreedTime, int sharkStarveTime, int wallsPercentage, int nbHunters, int speedHunter, int speedAvatar, int defenderLife) {
 		this.gridSizeX = gridSizeX;
 		this.gridSizeY = gridSizeY;
 		this.boxSize = boxSize;
@@ -40,6 +44,10 @@ public class Parameter {
 		this.sharkBreedTime = sharkBreedTime;
 		this.sharkStarveTime = sharkStarveTime;
 		this.wallsPercentage = wallsPercentage;
+		this.nbHunters = nbHunters;
+		this.speedHunter = speedHunter;
+		this.speedAvatar = speedAvatar;
+		this.defenderLife = defenderLife;
 	}
 
 	public int getGridSizeX() {
@@ -112,6 +120,22 @@ public class Parameter {
 	
 	public int getWallsPercent() {
 		return wallsPercentage;
+	}
+	
+	public int getNbHunters() {
+		return nbHunters;
+	}
+	
+	public int getSpeedHunter() {
+		return speedHunter;
+	}
+	
+	public int getSpeedAvatar() {
+		return speedAvatar;
+	}
+	
+	public int getDefenderLife() {
+		return defenderLife;
 	}
 	
 	public void setEndOfGame(){

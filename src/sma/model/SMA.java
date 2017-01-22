@@ -11,7 +11,8 @@ import particules.Particule;
 import sma.parameter.Parameter;
 
 public abstract class SMA extends Observable {
-
+	
+	public static int tick;
 	protected List<Agent> agentlist;
 	protected Environment environment;
 	protected Parameter parameters;
@@ -34,7 +35,7 @@ public abstract class SMA extends Observable {
 	
 	public void run(){
 		Random rand = new Random(parameters.getSeed());
-		int tick = 0;
+		tick = 1;
 		long startTimeTotal = System.currentTimeMillis();
 		while(tick < parameters.getNbTicks()){
 			long startTime = System.currentTimeMillis();

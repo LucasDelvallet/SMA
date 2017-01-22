@@ -7,6 +7,7 @@ import java.awt.event.KeyListener;
 import core.Agent;
 import sma.model.Environment;
 import sma.model.Position;
+import sma.model.SMA;
 import sma.parameter.Parameter;
 
 /**
@@ -24,23 +25,28 @@ public class Avatar extends Agent implements KeyListener {
 	
 	@Override
 	public void decide() {
-		processAgentCollision();
+		if (SMA.tick % parameters.getSpeedAvatar() == 0) {
+			processAgentCollision();
+		} else {
+			this.needToFreeze = true;
+		}
 	}
 
 	@Override
 	public void update() {
-		if (!needToFreeze) {
-			environment.agentsPosition[currentPosition.getX() / parameters.getBoxSize()][currentPosition.getY()
-					/ parameters.getBoxSize()] = null;
-			currentPosition = this.getNextPosition();
-			environment.agentsPosition[currentPosition.getX() / parameters.getBoxSize()][currentPosition.getY()
-					/ parameters.getBoxSize()] = this;
+		
+			if (!needToFreeze) {
+				environment.agentsPosition[currentPosition.getX() / parameters.getBoxSize()][currentPosition.getY()
+						/ parameters.getBoxSize()] = null;
+				currentPosition = this.getNextPosition();
+				environment.agentsPosition[currentPosition.getX() / parameters.getBoxSize()][currentPosition.getY()
+						/ parameters.getBoxSize()] = this;
 
-			dijkstra.compute(this.getCurrentIndex());
-			
-		} else {
-			needToFreeze = false;
-		}
+				dijkstra.compute(this.getCurrentIndex());
+				
+			} else {
+				needToFreeze = false;
+			}
 		
 	}
 	

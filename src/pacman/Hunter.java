@@ -7,6 +7,7 @@ import java.util.List;
 import core.Agent;
 import sma.model.Environment;
 import sma.model.Position;
+import sma.model.SMA;
 import sma.parameter.Parameter;
 
 public class Hunter extends Agent {
@@ -22,24 +23,31 @@ public class Hunter extends Agent {
 
 	@Override
 	public void decide() {
-		nextMove = dijkstra.getNextMove(this.getCurrentIndex());
-		nextMove.setX(nextMove.getX()*parameters.getBoxSize());
-		nextMove.setY(nextMove.getY()*parameters.getBoxSize());
-		
-		processAgentCollision();
+		int mod = parameters.getSpeedHunter()%SMA.tick;
+		if(SMA.tick%parameters.getSpeedHunter() == 0){
+			nextMove = dijkstra.getNextMove(this.getCurrentIndex());
+			nextMove.setX(nextMove.getX()*parameters.getBoxSize());
+			nextMove.setY(nextMove.getY()*parameters.getBoxSize());
+			
+			processAgentCollision();
+		}else{
+			this.needToFreeze = true;
+		}
 	}
 
 	@Override
 	public void update() {
-		if (!needToFreeze) {
-			environment.agentsPosition[currentPosition.getX() / parameters.getBoxSize()][currentPosition.getY()
-					/ parameters.getBoxSize()] = null;
-			currentPosition = this.getNextPosition();
-			environment.agentsPosition[currentPosition.getX() / parameters.getBoxSize()][currentPosition.getY()
-					/ parameters.getBoxSize()] = this;
-		} else {
-			needToFreeze = false;
-		}
+		
+			if (!needToFreeze) {
+				environment.agentsPosition[currentPosition.getX() / parameters.getBoxSize()][currentPosition.getY()
+						/ parameters.getBoxSize()] = null;
+				currentPosition = this.getNextPosition();
+				environment.agentsPosition[currentPosition.getX() / parameters.getBoxSize()][currentPosition.getY()
+						/ parameters.getBoxSize()] = this;
+			} else {
+				needToFreeze = false;
+			}
+		
 	}
 
 	@Override

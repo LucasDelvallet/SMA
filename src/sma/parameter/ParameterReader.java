@@ -24,6 +24,10 @@ public class ParameterReader {
 	private static final String SHARKBREEDTIME = "sharkBreedTime";
 	private static final String SHARKSTARVETIME = "sharkStarveTime";
 	private static final String WALLSPERCENTAGE = "wallsPercentage";
+	private static final String NBHUNTERS = "nbHunters";
+	private static final String SPEEDHUNTER = "speedHunter";
+	private static final String SPEEDAVATAR = "speedAvatar";
+	private static final String DEFENDERLIFE = "defenderLife";
 	// Default values
 	private int gridSizeX = 200;
 	private int gridSizeY = 200;
@@ -43,6 +47,10 @@ public class ParameterReader {
 	private int sharkBreedTime = 5;
 	private int sharkStarveTime = 4;
 	private int wallsPercentage = 30;
+	private int nbHunters = 1;
+	private int speedHunter = 1;
+	private int speedAvatar = 1;
+	private int defenderLife = 10;
 	
 	public Parameter getParameters(File paramFile) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(paramFile));
@@ -56,7 +64,7 @@ public class ParameterReader {
 		    br.close();
 		}
 		
-		return new Parameter(gridSizeX, gridSizeY, boxSize, delay, scheduling, nbTicks, grid, trace, seed, refresh, nbParticles, toric, nbFishs, fishBreedTime, nbSharks, sharkBreedTime, sharkStarveTime, wallsPercentage);
+		return new Parameter(gridSizeX, gridSizeY, boxSize, delay, scheduling, nbTicks, grid, trace, seed, refresh, nbParticles, toric, nbFishs, fishBreedTime, nbSharks, sharkBreedTime, sharkStarveTime, wallsPercentage, nbHunters, speedHunter, speedAvatar, defenderLife);
 	}
 	
 	private void setVariable(String line) {
@@ -116,6 +124,18 @@ public class ParameterReader {
 			break;
 		case WALLSPERCENTAGE:
 			this.wallsPercentage = Integer.parseInt(param[1]);
+			break;
+		case NBHUNTERS:
+			this.nbHunters = Integer.parseInt(param[1]);
+			break;
+		case SPEEDHUNTER:
+			this.speedHunter = Integer.parseInt(param[1]);
+			break;
+		case SPEEDAVATAR:
+			this.speedAvatar = Integer.parseInt(param[1]);
+			break;
+		case DEFENDERLIFE:
+			this.defenderLife = Integer.parseInt(param[1]);
 			break;
 		default:
 			break;

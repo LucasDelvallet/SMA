@@ -62,7 +62,7 @@ public class SMAPacman extends SMA {
 	
 	private void setHunters(Parameter parameters, Random rand, List<Position> possiblePositions) {
 		int index, nbHunter;
-		nbHunter = 5;
+		nbHunter = parameters.getNbHunters();
 
 		for (int i = 0; i < nbHunter; i++) {
 			index = rand.nextInt(possiblePositions.size());
