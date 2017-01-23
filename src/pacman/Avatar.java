@@ -20,7 +20,7 @@ public class Avatar extends Agent implements KeyListener {
 	
 	public Avatar(Environment environment, Parameter parameters, Position xy, Dijkstra dijkstra) {
 		super(environment, parameters, xy);
-		color = Color.GREEN;
+		setDefaultColor();
 		this.dijkstra = dijkstra;	
 		invicibility = 0;
 	}
@@ -44,6 +44,10 @@ public class Avatar extends Agent implements KeyListener {
 					/ parameters.getBoxSize()] = this;
 
 			dijkstra.compute(this.getCurrentIndex(), invicibility > 0);
+			
+			if(invicibility == 0) {
+				setDefaultColor();
+			}
 
 		} else {
 			needToFreeze = false;
@@ -80,6 +84,7 @@ public class Avatar extends Agent implements KeyListener {
 		if(collided.getClass().getSimpleName().equals("Defender")){
 			environment.removeAgent(collided);
 			invicibility = parameters.getDefenderLife();
+			setInvicibleColor();
 		}else{
 			this.needToFreeze = true;
 		}
@@ -129,5 +134,13 @@ public class Avatar extends Agent implements KeyListener {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// Nothing
+	}
+	
+	private void setDefaultColor() {
+		color = Color.GREEN;
+	}
+	
+	private void setInvicibleColor() {
+		color = Color.CYAN;
 	}
 }

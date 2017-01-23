@@ -30,4 +30,4 @@ wallsPercentage 20
 nbHunters 5
 speedHunter 2
 speedAvatar 1
-defenderLife 50
+defenderLife 20
