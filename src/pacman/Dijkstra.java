@@ -42,15 +42,25 @@ public class Dijkstra {
 	public Position getNextMove(Position p){
 		
 		int value = cells[p.getX()][p.getY()];
+		if(negateValue){
+			value = 0;
+		}
 		Position nextMove = new Position(0,0);
 		for(Position surrounding : surroundings){
 			int x = p.getX() + surrounding.getX();
 			int y = p.getY() + surrounding.getY();
 			if(x >= 0 && x < cells.length && y >= 0 && y < cells[0].length){
 				int nextValue = cells[x][y];
-				if(nextValue < value){
-					nextMove = new Position(surrounding);
-					value = nextValue;
+				if(negateValue){
+					if(nextValue >= value && nextValue != cells.length * cells[x].length){
+						nextMove = new Position(surrounding);
+						value = nextValue;
+					}
+				}else{
+					if(nextValue < value){
+						nextMove = new Position(surrounding);
+						value = nextValue;
+					}
 				}
 			}
 		}
@@ -80,17 +90,14 @@ public class Dijkstra {
 		
 		while(unvisited.size() != 0){
 			int lowestValue = cells.length * cells[0].length;
-			
-			for (Position p : unvisited) {
+			for(Position p : unvisited){
 				int pValue = cells[p.getX()][p.getY()];
-
-				if (pValue < lowestValue) {
+				if(pValue < lowestValue){
 					currentCell = p;
 					lowestValue = pValue;
 				}
-
 			}
-			if(lowestValue == cells.length * cells[0].length || lowestValue == 0){
+			if(lowestValue == cells.length * cells[0].length){
 				break;
 			}
 			visitNeighborhood(currentCell);
@@ -124,6 +131,7 @@ public class Dijkstra {
 			if (cells[x][y] > value + 1) {
 				cells[x][y] = value + 1;
 			}
+			
 			
 		}
 	}
