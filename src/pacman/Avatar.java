@@ -16,11 +16,13 @@ import sma.parameter.Parameter;
 public class Avatar extends Agent implements KeyListener {
 
 	private Dijkstra dijkstra;
+	private int invicibility;
 	
 	public Avatar(Environment environment, Parameter parameters, Position xy, Dijkstra dijkstra) {
 		super(environment, parameters, xy);
 		color = Color.GREEN;
-		this.dijkstra = dijkstra;
+		this.dijkstra = dijkstra;	
+		invicibility = 0;
 	}
 	
 	@Override
@@ -34,20 +36,19 @@ public class Avatar extends Agent implements KeyListener {
 
 	@Override
 	public void update() {
-		
-			if (!needToFreeze) {
-				environment.agentsPosition[currentPosition.getX() / parameters.getBoxSize()][currentPosition.getY()
-						/ parameters.getBoxSize()] = null;
-				currentPosition = this.getNextPosition();
-				environment.agentsPosition[currentPosition.getX() / parameters.getBoxSize()][currentPosition.getY()
-						/ parameters.getBoxSize()] = this;
+		if (!needToFreeze) {
+			environment.agentsPosition[currentPosition.getX() / parameters.getBoxSize()][currentPosition.getY()
+					/ parameters.getBoxSize()] = null;
+			currentPosition = this.getNextPosition();
+			environment.agentsPosition[currentPosition.getX() / parameters.getBoxSize()][currentPosition.getY()
+					/ parameters.getBoxSize()] = this;
 
-				dijkstra.compute(this.getCurrentIndex());
-				
-			} else {
-				needToFreeze = false;
-			}
-		
+			dijkstra.compute(this.getCurrentIndex(), invicibility > 0);
+
+		} else {
+			needToFreeze = false;
+		}
+		invicibility--;
 	}
 	
 	@Override
@@ -76,9 +77,9 @@ public class Avatar extends Agent implements KeyListener {
 
 	@Override
 	public void agentCollisionReaction(Agent collided) {
-		if(collided.getClass().getSimpleName().equals("Avatar")){
+		if(collided.getClass().getSimpleName().equals("Defender")){
 			environment.removeAgent(collided);
-			// TODO devenir invisible.
+			invicibility = parameters.getDefenderLife();
 		}else{
 			this.needToFreeze = true;
 		}

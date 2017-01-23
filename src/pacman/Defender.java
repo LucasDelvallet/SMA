@@ -1,5 +1,7 @@
 package pacman;
 
+import java.awt.Color;
+
 import core.Agent;
 import sma.model.Environment;
 import sma.model.Position;
@@ -11,6 +13,7 @@ public class Defender extends Agent{
 	public Defender(Environment environment, Parameter parameters, Position xy) {
 		super(environment, parameters, xy);
 		this.life = parameters.getDefenderLife();
+		this.color = Color.ORANGE;
 	}
 
 	@Override

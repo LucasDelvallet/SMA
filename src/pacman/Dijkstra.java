@@ -14,6 +14,7 @@ public class Dijkstra {
 	private Set<Position> visited ;
 	private SMAPacman sma;
 	private List<Position> surroundings ;
+	private boolean negateValue ;
 	
 	public Dijkstra(int sizeX, int sizeY, SMAPacman sma) {
 		this.sma = sma;
@@ -31,6 +32,7 @@ public class Dijkstra {
 		surroundings.add(new Position(0,-1));
 		surroundings.add(new Position(1,-1));
 		
+		negateValue = false;
 	}
 	
 	public int getCellValue(Position p) {
@@ -56,9 +58,10 @@ public class Dijkstra {
 		return nextMove;
 	}
 	
-	public void compute(Position avatar) {
+	public void compute(Position avatar, boolean negateValue) {
 		Agent[][] agents = sma.getEnvironment().agentsPosition;
 		
+		this.negateValue = negateValue;
 		unvisited.clear();
 		visited.clear();
 		
@@ -114,10 +117,16 @@ public class Dijkstra {
 			//if(!(sma.getEnvironment().agentsPosition[x][y] != null && sma.getEnvironment().agentsPosition[x][y].getClass().getSimpleName().equals("Wall"))){
 			unvisited.add(p);
 			//}
-			
-			if(cells[x][y] > value + 1){
-				cells[x][y] = value + 1;
+			if(negateValue){
+				if(cells[x][y] < value - 1){
+					cells[x][y] = value - 1;
+				}
+			}else{
+				if(cells[x][y] > value + 1){
+					cells[x][y] = value + 1;
+				}
 			}
+			
 		}
 	}
 	

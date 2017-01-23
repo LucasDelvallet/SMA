@@ -13,12 +13,11 @@ import sma.parameter.Parameter;
 public class Hunter extends Agent {
 
 	private Dijkstra dijkstra;
-
+	
 	public Hunter(Environment environment, Parameter parameters, Position xy, Dijkstra dijkstra) {
 		super(environment, parameters, xy);
 		this.dijkstra = dijkstra;
 		this.color = Color.RED;
-		
 	}
 
 	@Override
