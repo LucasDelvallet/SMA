@@ -1,5 +1,7 @@
 package pacman;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -11,13 +13,16 @@ import sma.model.Position;
 import sma.model.SMA;
 import sma.parameter.Parameter;
 
-public class SMAPacman extends SMA {
+public class SMAPacman extends SMA implements KeyListener {
 
 	private Dijkstra dijkstra;
+	private boolean paused;
 	
 	public SMAPacman(Parameter parameters, JPanel panel) {
 		super(parameters);
 		bindAvatar(panel);
+		panel.addKeyListener(this);
+		paused = false;
 	}
 
 	@Override
@@ -84,5 +89,50 @@ public class SMAPacman extends SMA {
 				panel.addKeyListener((Avatar) a);
 			}
 		}
+	}
+	
+	@Override
+	protected boolean isPaused() {
+		return paused;
+	}
+	
+	@Override
+	public void keyTyped(KeyEvent e) {
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		int val = 0;
+		switch (e.getKeyCode()) {
+		case KeyEvent.VK_A:
+			val = parameters.getSpeedHunter() - 1;
+			parameters.setSpeedHunter((val < 0)?0:val);
+			break;
+		case KeyEvent.VK_Z:
+			parameters.setSpeedHunter(parameters.getSpeedHunter() + 1);
+			break;
+		case KeyEvent.VK_O:
+			val = parameters.getSpeedAvatar() - 1;
+			parameters.setSpeedAvatar((val < 0)?0:val);
+			break;
+		case KeyEvent.VK_P:
+			parameters.setSpeedAvatar(parameters.getSpeedHunter() + 1);
+			break;
+		case KeyEvent.VK_W:
+			val = parameters.getDelay() - 100;
+			parameters.setDelay((val < 0)?0:val);
+			break;
+		case KeyEvent.VK_X:
+			parameters.setDelay(parameters.getSpeedHunter() + 100);
+			break;
+		case KeyEvent.VK_SPACE:
+			paused = !paused;
+			break;
+		}
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
 	}
 }

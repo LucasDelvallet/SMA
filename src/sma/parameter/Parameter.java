@@ -65,6 +65,10 @@ public class Parameter {
 	public int getDelay() {
 		return delay;
 	}
+	
+	public void setDelay(int delay) {
+		this.delay = delay;
+	}
 
 	public int getScheduling() {
 		return scheduling;
@@ -130,8 +134,16 @@ public class Parameter {
 		return speedHunter;
 	}
 	
+	public void setSpeedHunter(int speed) {
+		this.speedHunter = speed;
+	}
+	
 	public int getSpeedAvatar() {
 		return speedAvatar;
+	}
+	
+	public void setSpeedAvatar(int speed) {
+		this.speedAvatar = speed;
 	}
 	
 	public int getDefenderLife() {

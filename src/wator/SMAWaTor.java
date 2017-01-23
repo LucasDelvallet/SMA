@@ -42,4 +42,9 @@ public class SMAWaTor extends SMA{
 			possiblePositions.remove(index);
 		}
 	}
+
+	@Override
+	protected boolean isPaused() {
+		return false;
+	}
 }

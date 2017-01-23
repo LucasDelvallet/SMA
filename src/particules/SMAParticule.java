@@ -36,4 +36,9 @@ public class SMAParticule extends SMA {
 			possiblePositions.remove(index);
 		}
 	}
+
+	@Override
+	protected boolean isPaused() {
+		return false;
+	}
 }
