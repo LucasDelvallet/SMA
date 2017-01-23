@@ -17,14 +17,16 @@ public class Avatar extends Agent implements KeyListener {
 
 	private Dijkstra dijkstra;
 	private int invicibility;
-	
+	private int huntersEated;
+
 	public Avatar(Environment environment, Parameter parameters, Position xy, Dijkstra dijkstra) {
 		super(environment, parameters, xy);
 		setDefaultColor();
-		this.dijkstra = dijkstra;	
+		this.dijkstra = dijkstra;
 		invicibility = 0;
+		huntersEated = 0;
 	}
-	
+
 	@Override
 	public void decide() {
 		if (SMA.tick % parameters.getSpeedAvatar() == 0) {
@@ -44,9 +46,13 @@ public class Avatar extends Agent implements KeyListener {
 					/ parameters.getBoxSize()] = this;
 
 			dijkstra.compute(this.getCurrentIndex(), invicibility > 0);
-			
-			if(invicibility == 0) {
+
+			if (invicibility == 0) {
 				setDefaultColor();
+			}
+
+			if (huntersEated >= 4 && !environment.haveWinner()) {
+				environment.addWinner();
 			}
 
 		} else {
@@ -54,7 +60,7 @@ public class Avatar extends Agent implements KeyListener {
 		}
 		invicibility--;
 	}
-	
+
 	@Override
 	protected boolean processWallCollision() {
 		int border_x = environment.getWidth() - parameters.getBoxSize();
@@ -73,7 +79,7 @@ public class Avatar extends Agent implements KeyListener {
 		} else if (nextPosition.getY() > border_y) {
 			res = true;
 		}
-		
+
 		needToFreeze = res;
 
 		return res;
@@ -81,11 +87,18 @@ public class Avatar extends Agent implements KeyListener {
 
 	@Override
 	public void agentCollisionReaction(Agent collided) {
-		if(collided.getClass().getSimpleName().equals("Defender")){
+		if (collided.getClass().getSimpleName().equals("Defender")) {
 			environment.removeAgent(collided);
 			invicibility = parameters.getDefenderLife();
 			setInvicibleColor();
-		}else{
+		} else if (collided.getClass().getSimpleName().equals("Hunter")) {
+			if (invicibility > 0) {
+				environment.removeAgent(collided);
+				huntersEated++;
+			}
+		} else if(collided.getClass().getSimpleName().equals("Winner")) {
+			parameters.setEndOfGame();
+		} else {
 			this.needToFreeze = true;
 		}
 	}
@@ -102,7 +115,7 @@ public class Avatar extends Agent implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		switch(e.getKeyCode()) {
+		switch (e.getKeyCode()) {
 		case KeyEvent.VK_NUMPAD8:
 			nextMove = new Position(0, -parameters.getBoxSize());
 			break;
@@ -128,18 +141,18 @@ public class Avatar extends Agent implements KeyListener {
 			nextMove = new Position(-parameters.getBoxSize(), -parameters.getBoxSize());
 			break;
 		}
-		
+
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// Nothing
 	}
-	
+
 	private void setDefaultColor() {
 		color = Color.GREEN;
 	}
-	
+
 	private void setInvicibleColor() {
 		color = Color.CYAN;
 	}

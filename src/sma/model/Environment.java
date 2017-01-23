@@ -1,8 +1,11 @@
 package sma.model;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import core.Agent;
+import pacman.Winner;
 import sma.parameter.Parameter;
 
 public class Environment {
@@ -13,12 +16,14 @@ public class Environment {
 	private List<Agent> agentlist;
 	public Agent[][] agentsPosition;
 	private Parameter parameters;
+	private boolean haveWinner;
 	
 	public Environment(SMA sma, Parameter parameters){
 		this.parameters = parameters;
 		this.width = parameters.getGridSizeX()*parameters.getBoxSize();
 		this.height = parameters.getGridSizeY()*parameters.getBoxSize();
 		this.sma = sma;
+		this.haveWinner = false;
 		
 		agentsPosition = new Agent[parameters.getGridSizeX()][parameters.getGridSizeY()];
 	}
@@ -56,5 +61,27 @@ public class Environment {
 	
 		sma.removeAgent(agent);
 	
+	}
+	
+	public void addWinner() {
+		List<Position> possiblePositions = new ArrayList<>();
+		for(int x=0; x < parameters.getGridSizeX(); x++) {
+			for(int y=0; y < parameters.getGridSizeY(); y++) {
+				possiblePositions.add(new Position(x*parameters.getBoxSize(), y*parameters.getBoxSize()));
+			}
+		}
+		
+		for(Agent a : agentlist) {
+			possiblePositions.remove(a.getCurrentPosition());
+		}
+		
+		Random rand = new Random(parameters.getSeed());
+		int index = rand.nextInt(possiblePositions.size());
+		addAgent(new Winner(this, parameters, possiblePositions.get(index)));
+		haveWinner = true;
+	}
+	
+	public boolean haveWinner() {
+		return haveWinner;
 	}
 }
