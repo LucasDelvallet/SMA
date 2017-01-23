@@ -8,7 +8,7 @@ scheduling 0
 nbTicks 3000000
 grid true
 trace false
-seed 2
+seed 1
 refresh 1
 toric false
 

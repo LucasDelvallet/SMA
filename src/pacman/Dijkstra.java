@@ -80,14 +80,17 @@ public class Dijkstra {
 		
 		while(unvisited.size() != 0){
 			int lowestValue = cells.length * cells[0].length;
-			for(Position p : unvisited){
+			
+			for (Position p : unvisited) {
 				int pValue = cells[p.getX()][p.getY()];
-				if(pValue < lowestValue){
+
+				if (pValue < lowestValue) {
 					currentCell = p;
 					lowestValue = pValue;
 				}
+
 			}
-			if(lowestValue == cells.length * cells[0].length){
+			if(lowestValue == cells.length * cells[0].length || lowestValue == 0){
 				break;
 			}
 			visitNeighborhood(currentCell);
@@ -117,14 +120,9 @@ public class Dijkstra {
 			//if(!(sma.getEnvironment().agentsPosition[x][y] != null && sma.getEnvironment().agentsPosition[x][y].getClass().getSimpleName().equals("Wall"))){
 			unvisited.add(p);
 			//}
-			if(negateValue){
-				if(cells[x][y] < value - 1){
-					cells[x][y] = value - 1;
-				}
-			}else{
-				if(cells[x][y] > value + 1){
-					cells[x][y] = value + 1;
-				}
+
+			if (cells[x][y] > value + 1) {
+				cells[x][y] = value + 1;
 			}
 			
 		}
