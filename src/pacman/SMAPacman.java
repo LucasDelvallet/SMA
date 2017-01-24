@@ -123,7 +123,7 @@ public class SMAPacman extends SMA implements KeyListener {
 			parameters.setDelay((val < 0)?0:val);
 			break;
 		case KeyEvent.VK_X:
-			parameters.setDelay(parameters.getSpeedHunter() + 100);
+			parameters.setDelay(parameters.getDelay() + 100);
 			break;
 		case KeyEvent.VK_SPACE:
 			paused = !paused;
