@@ -8,7 +8,7 @@ scheduling 0
 nbTicks 3000000
 grid true
 trace false
-seed 1
+seed 3
 refresh 1
 toric false
 
@@ -30,4 +30,4 @@ wallsPercentage 20
 nbHunters 10
 speedHunter 8
 speedAvatar 1
-defenderLife 100
+defenderLife 10

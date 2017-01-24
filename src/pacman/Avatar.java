@@ -17,14 +17,14 @@ public class Avatar extends Agent implements KeyListener {
 
 	private Dijkstra dijkstra;
 	private int invicibility;
-	private int huntersEated;
+	private int defendersEated;
 
 	public Avatar(Environment environment, Parameter parameters, Position xy, Dijkstra dijkstra) {
 		super(environment, parameters, xy);
 		setDefaultColor();
 		this.dijkstra = dijkstra;
 		invicibility = 0;
-		huntersEated = 0;
+		defendersEated = 0;
 	}
 
 	@Override
@@ -47,16 +47,17 @@ public class Avatar extends Agent implements KeyListener {
 
 			dijkstra.compute(this.getCurrentIndex(), invicibility > 0);
 
-			if (invicibility == 0) {
-				setDefaultColor();
-			}
-
-			if (huntersEated >= 4 && !environment.haveWinner()) {
+			if (defendersEated >= 4 && !environment.haveWinner()) {
 				environment.addWinner();
 			}
-
 		} else {
 			needToFreeze = false;
+		}
+		if (invicibility <= 0) {
+			setDefaultColor();
+		}
+		if (SMA.tick % parameters.getDefenderLife() == 0) {
+			environment.addDefender();
 		}
 		invicibility--;
 	}
@@ -90,11 +91,11 @@ public class Avatar extends Agent implements KeyListener {
 		if (collided.getClass().getSimpleName().equals("Defender")) {
 			environment.removeAgent(collided);
 			invicibility = parameters.getDefenderLife();
+			defendersEated++;
 			setInvicibleColor();
 		} else if (collided.getClass().getSimpleName().equals("Hunter")) {
 			if (invicibility > 0) {
 				environment.removeAgent(collided);
-				huntersEated++;
 			}
 		} else if(collided.getClass().getSimpleName().equals("Winner")) {
 			parameters.setEndOfGame();

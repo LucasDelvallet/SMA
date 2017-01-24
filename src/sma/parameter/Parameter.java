@@ -5,10 +5,10 @@ public class Parameter {
 	private int gridSizeY;
 	private int boxSize;
 	private int delay;
-	private int scheduling; //TODO 0:equitable 1:sequentiel, 2:aléatoire 
+	private int scheduling; // 0:equitable 1:sequentiel, 2:aléatoire 
 	private int nbTicks; 
 	private boolean grid;
-	private boolean trace; //TODO
+	private boolean trace; 
 	private int seed;
 	private int refresh;
 	private int nbParticles;

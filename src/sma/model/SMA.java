@@ -7,6 +7,8 @@ import java.util.Observable;
 import java.util.Random;
 
 import core.Agent;
+import pacman.Defender;
+import pacman.Winner;
 import particules.Particule;
 import sma.parameter.Parameter;
 
@@ -16,10 +18,13 @@ public abstract class SMA extends Observable {
 	protected List<Agent> agentlist;
 	protected Environment environment;
 	protected Parameter parameters;
+	private Random rand;
 
 	public SMA(Parameter parameters) {
 		this.parameters = parameters;
 		this.environment = new Environment(this, parameters);
+		
+		rand = new Random(parameters.getSeed());
 
 		initAgent(parameters);
 		environment.setAgentlist(agentlist);
@@ -34,11 +39,9 @@ public abstract class SMA extends Observable {
 	}
 
 	public void run() {
-		Random rand = new Random(parameters.getSeed());
 		tick = 1;
 		long startTimeTotal = System.currentTimeMillis();
 		while (tick < parameters.getNbTicks()) {
-			System.out.println(isPaused());
 			if (!isPaused()) {
 				long startTime = System.currentTimeMillis();
 				switch (parameters.getScheduling()) {
@@ -97,6 +100,41 @@ public abstract class SMA extends Observable {
 		agentlist.remove(agent);
 	}
 
+	public void addDefender(){
+		List<Position> possiblePositions = new ArrayList<>();
+		for(int x=0; x < parameters.getGridSizeX(); x++) {
+			for(int y=0; y < parameters.getGridSizeY(); y++) {
+				possiblePositions.add(new Position(x*parameters.getBoxSize(), y*parameters.getBoxSize()));
+			}
+		}
+		
+		for(Agent a : agentlist) {
+			possiblePositions.remove(a.getCurrentPosition());
+		}
+		
+		
+		int index = rand.nextInt(possiblePositions.size());
+		environment.addAgent(new Defender(environment, parameters, possiblePositions.get(index)));
+	}
+	
+	public void addWinner(){
+		List<Position> possiblePositions = new ArrayList<>();
+		for(int x=0; x < parameters.getGridSizeX(); x++) {
+			for(int y=0; y < parameters.getGridSizeY(); y++) {
+				possiblePositions.add(new Position(x*parameters.getBoxSize(), y*parameters.getBoxSize()));
+			}
+		}
+		
+		for(Agent a : agentlist) {
+			possiblePositions.remove(a.getCurrentPosition());
+		}
+		
+		Random rand = new Random(parameters.getSeed());
+		int index = rand.nextInt(possiblePositions.size());
+		environment.addAgent(new Winner(environment, parameters, possiblePositions.get(index)));
+		environment.setHaveWinner();
+	}
+	
 	protected abstract void initAgent(Parameter parameters);
 
 	protected abstract boolean isPaused();
