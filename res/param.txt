@@ -1,20 +1,20 @@
 #Global Parameters#
 
-gridSizeX 30
-gridSizeY 30
-boxSize 20
-delay 500
+gridSizeX 50
+gridSizeY 50
+boxSize 7
+delay 100
 scheduling 0
 nbTicks 3000000
-grid true
+grid false
 trace false
-seed 3
+seed 1
 refresh 1
 toric false
 
 #Particles specific parameters#
 
-nbParticles 1
+nbParticles 20
 
 #WaTor specific parameters#
 
@@ -22,12 +22,12 @@ nbFishs 100
 fishBreedTime 3
 nbSharks 300
 sharkBreedTime 9
-sharkStarveTime 8
+sharkStarveTime 8 
 
 #Pacman
 
 wallsPercentage 20
 nbHunters 10
-speedHunter 8
+speedHunter 10
 speedAvatar 1
-defenderLife 10
+defenderLife 40
